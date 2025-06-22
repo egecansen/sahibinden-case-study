@@ -7,6 +7,5 @@
   "appWaitDuration": 180000,
   "androidInstallTimeout": 180000,
   "uiautomator2ServerLaunchTimeout": 180000,
-  "uiautomator2ServerInstallTimeout": 180000,
-  "app": "src/test/resources/apps/AccuWeather.apk"
+  "uiautomator2ServerInstallTimeout": 180000
 }

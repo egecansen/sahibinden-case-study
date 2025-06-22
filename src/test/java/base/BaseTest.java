@@ -1,33 +1,47 @@
 package base;
 
+import app.SahibindenCaseStudyApplication;
+import app.common.DevicePool;
+import app.common.Utils;
+import app.config.DeviceConfig;
 import app.driver.Driver;
 import io.appium.java_client.AppiumDriver;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import app.SahibindenCaseStudyApplication;
+import org.springframework.context.ApplicationContext;
 
 @SpringBootTest(classes = SahibindenCaseStudyApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public abstract class BaseTest {
+public class BaseTest {
 
     @Autowired
     protected Driver driverService;
-
+    @Autowired
+    private ApplicationContext applicationContext;
     protected AppiumDriver driver;
+    private DeviceConfig deviceConfig;
+    protected DevicePool devicePool = DevicePool.getInstance();
 
-    @BeforeAll
+    @BeforeEach
     public void setup() {
-        System.out.println(">>> BaseTest: setup() called");
-        driverService.initialize();
+        driverService = applicationContext.getBean(Driver.class);
+        deviceConfig = devicePool.acquireDevice();
+        driverService.initialize(deviceConfig);
         driver = driverService.getDriver();
     }
 
-    @AfterAll
-    public void teardown() {
-        System.out.println(">>> BaseTest: teardown() called");
-        driverService.terminate();
+    @AfterEach
+    public void teardown(TestInfo context) {
+        if (driver != null) {
+            Utils.captureScreen(driver, context.getDisplayName());
+            driverService.terminate();
+        }
+        if (deviceConfig != null) {
+            devicePool.releaseDevice(deviceConfig);
+        }
     }
 }

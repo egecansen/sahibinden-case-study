@@ -3,6 +3,7 @@ package app.config;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 @Data
 @Configuration
@@ -18,4 +19,6 @@ public class Properties {
     private int uiautomator2ServerLaunchTimeout;
     private int uiautomator2ServerInstallTimeout;
     private String apk;
+    private String udid;
+    private int appiumPort;
 }

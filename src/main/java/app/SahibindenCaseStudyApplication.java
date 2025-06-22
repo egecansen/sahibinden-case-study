@@ -9,8 +9,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties(Properties.class)
 public class SahibindenCaseStudyApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SahibindenCaseStudyApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SahibindenCaseStudyApplication.class, args);
+    }
 
 }
