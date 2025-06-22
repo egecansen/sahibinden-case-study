@@ -5,7 +5,7 @@ services:
     image: jenkins/jenkins:lts
     container_name: jenkins
     ports:
-      - "8080:8080"
+      - "8088:8080"
       - "50000:50000"
     volumes:
       - ./jenkins_home:/var/jenkins_home
@@ -16,9 +16,8 @@ services:
     image: appium/appium:latest
     container_name: appium
     ports:
-      - "4723:4723"    # Default Appium port
+      - "4723:4723"
     environment:
       - RELAXED_SECURITY=true
-    command: >
-      --allow-insecure chromedriver_autodownload
+    command: [ "appium", "--allow-insecure", "chromedriver_autodownload" ]
     restart: unless-stopped
