@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   jenkins:
-    image: carlossg/jenkins-maven:latest
+    build: .
     container_name: jenkins
     ports:
       - "8088:8080"
@@ -11,6 +11,7 @@ services:
       - ./jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
+
 
   appium:
     image: appium/appium:latest
