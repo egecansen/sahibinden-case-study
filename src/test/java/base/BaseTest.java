@@ -2,6 +2,7 @@ package base;
 
 import app.SahibindenCaseStudyApplication;
 import app.common.DevicePool;
+import app.common.TestStatus;
 import app.common.Utils;
 import app.config.DeviceConfig;
 import app.driver.Driver;
@@ -10,14 +11,18 @@ import context.ContextStore;
 import io.appium.java_client.AppiumDriver;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import utils.Printer;
 
 @SpringBootTest(classes = SahibindenCaseStudyApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
+@ExtendWith(StatusWatcher.class)
 public class BaseTest {
 
+    private final Printer log = new Printer(BaseTest.class);
     @Autowired
     protected Driver driverService;
     @Autowired
@@ -26,17 +31,18 @@ public class BaseTest {
 
 
     @BeforeEach
-    public void setup() {
+    public void setup(TestInfo testInfo) {
         ContextStore.loadProperties("test.properties");
         driverService = applicationContext.getBean(Driver.class);
         driverService.initialize();
         driver = DriverManager.getDriver();
+        log.important("EXECUTING: " + testInfo.getDisplayName());
     }
 
     @AfterEach
-    public void teardown(TestInfo context) {
+    public void teardown(TestInfo testInfo) {
+        if (TestStatus.isFailed()) Utils.captureScreen(driver, testInfo.getTags().stream().findFirst().orElse("NoTag"));
         if (driver != null) {
-            Utils.captureScreen(driver, context.getTags().stream().findFirst().orElse("NoTag"));
             driverService.terminate();
         }
     }
