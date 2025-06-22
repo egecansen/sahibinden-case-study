@@ -32,5 +32,6 @@ build/
 .vscode/
 /src/test/resources/screenshots/
 /src/test/resources/.DS_Store
-/src/test/resources/apks/AccuWeather.apk
 *jenkins_home/
+/src/test/resources/apks/AccuWeather.apk
+/src/test/resources/configurations/
