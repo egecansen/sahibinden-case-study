@@ -13,12 +13,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import utils.Printer;
 
-@Component
-public class PersonalizedAdsScreen extends Utils {
+
+public class PersonalizedAdsScreen {
 
     public Printer log = new Printer(PersonalizedAdsScreen.class);
 
-    public void init(AppiumDriver driver) {
+    Utils utils;
+    public PersonalizedAdsScreen(AppiumDriver driver) {
+        utils = new Utils(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -33,15 +35,15 @@ public class PersonalizedAdsScreen extends Utils {
 
 
     public void clickPersonalizedAdsScreenNextButton() {
-        waitUntilClickable(nextButton);
-        clickElementUntil(nextButton);
+        utils.waitUntilClickable(nextButton);
+        utils.clickElementUntil(nextButton);
         log.info("Clicked on the nextButton on the PersonalizedAdsScreen");
 
-        waitUntilDisplayed(allowPersonalizedAdsButton);
-        waitUntilClickable(allowPersonalizedAdsButton);
-        clickElementUntil(allowPersonalizedAdsButton);
-        log.info("Clicked on the allowPersonalizedAdsButton on the PersonalizedAdsScreen");
         closeTermsOfUsePageIfDisplayed();
+        utils.waitUntilDisplayed(allowPersonalizedAdsButton);
+        utils.waitUntilClickable(allowPersonalizedAdsButton);
+        utils.clickElementUntil(allowPersonalizedAdsButton);
+        log.info("Clicked on the allowPersonalizedAdsButton on the PersonalizedAdsScreen");
     }
 
 
@@ -50,7 +52,7 @@ public class PersonalizedAdsScreen extends Utils {
             if (closePageButton.isDisplayed()) {
                 log.info("Terms of Use page is displayed");
                 log.info("Closing the Terms of Use page...");
-                clickElementUntil(closePageButton);
+                utils.clickElementUntil(closePageButton);
             }
         }
         catch (NoSuchElementException ignored) {}

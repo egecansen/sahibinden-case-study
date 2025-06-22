@@ -1,52 +1,37 @@
 package app.screens.factory;
 
-
+import app.driver.DriverManager;
 import app.screens.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ObjectFactory {
-    private final HomeScreen homeScreen;
-    private final GetStartedScreen getStartedScreen;
-    private final WeatherInfoScreen weatherInfoScreen;
-    private final NotificationsScreen notificationsScreen;
-    private final PersonalizedAdsScreen personalizedAdsScreen;
-    private final TermsAndPrivacyScreen termsAndPrivacyScreen;
-    private final CurrentConditionsScreen currentConditionsScreen;
-    private final LocationsDropdownScreen locationsDropdownScreen;
-    private final LocationPermissionsScreen locationPermissionsScreen;
 
-    @Autowired
-    public ObjectFactory(
-            HomeScreen homeScreen,
-            GetStartedScreen getStartedScreen,
-            WeatherInfoScreen weatherInfoScreen, NotificationsScreen notificationsScreen,
-            PersonalizedAdsScreen personalizedAdsScreen,
-            TermsAndPrivacyScreen termsAndPrivacyScreen,
-            CurrentConditionsScreen currentConditionsScreen, LocationsDropdownScreen locationsDropdownScreen,
-            LocationPermissionsScreen locationPermissionsScreen
-    ) {
-        this.homeScreen = homeScreen;
-        this.getStartedScreen = getStartedScreen;
-        this.weatherInfoScreen = weatherInfoScreen;
-        this.notificationsScreen = notificationsScreen;
-        this.personalizedAdsScreen = personalizedAdsScreen;
-        this.termsAndPrivacyScreen = termsAndPrivacyScreen;
-        this.currentConditionsScreen = currentConditionsScreen;
-        this.locationsDropdownScreen = locationsDropdownScreen;
-        this.locationPermissionsScreen = locationPermissionsScreen;
+    public HomeScreen homeScreen() {
+        return new HomeScreen(DriverManager.getDriver());
     }
-
-    public HomeScreen homeScreen() { return homeScreen; }
-    public GetStartedScreen getStartedScreen() { return getStartedScreen; }
-    public WeatherInfoScreen weatherInfoScreen() { return weatherInfoScreen; }
-    public NotificationsScreen notificationsScreen() { return notificationsScreen; }
-    public TermsAndPrivacyScreen termsAndPrivacyScreen() { return termsAndPrivacyScreen; }
-    public PersonalizedAdsScreen personalizedAdsScreen() { return personalizedAdsScreen; }
-    public CurrentConditionsScreen currentConditionsScreen() { return currentConditionsScreen; }
-    public LocationsDropdownScreen locationsDropdownScreen() { return locationsDropdownScreen; }
-    public LocationPermissionsScreen locationPermissionsScreen() { return locationPermissionsScreen; }
-
-
+    public GetStartedScreen getStartedScreen() {
+        return new GetStartedScreen(DriverManager.getDriver());
+    }
+    public WeatherInfoScreen weatherInfoScreen() {
+        return new WeatherInfoScreen(DriverManager.getDriver());
+    }
+    public NotificationsScreen notificationsScreen() {
+        return new NotificationsScreen(DriverManager.getDriver());
+    }
+    public TermsAndPrivacyScreen termsAndPrivacyScreen() {
+        return new TermsAndPrivacyScreen(DriverManager.getDriver());
+    }
+    public PersonalizedAdsScreen personalizedAdsScreen() {
+        return new PersonalizedAdsScreen(DriverManager.getDriver());
+    }
+    public CurrentConditionsScreen currentConditionsScreen() {
+        return new CurrentConditionsScreen(DriverManager.getDriver());
+    }
+    public LocationsDropdownScreen locationsDropdownScreen() {
+        return new LocationsDropdownScreen(DriverManager.getDriver());
+    }
+    public LocationPermissionsScreen locationPermissionsScreen() {
+        return new LocationPermissionsScreen(DriverManager.getDriver());
+    }
 }

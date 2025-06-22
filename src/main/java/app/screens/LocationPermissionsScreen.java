@@ -11,12 +11,15 @@ import org.springframework.stereotype.Component;
 import utils.Printer;
 
 
-@Component
-public class LocationPermissionsScreen extends Utils {
+
+public class LocationPermissionsScreen {
 
     public Printer log = new Printer(LocationPermissionsScreen.class);
 
-    public void init(AppiumDriver driver) {
+    Utils utils;
+
+    public LocationPermissionsScreen(AppiumDriver driver) {
+        this.utils = new Utils(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -28,13 +31,13 @@ public class LocationPermissionsScreen extends Utils {
 
 
     public void clickLocationAndPermissionsNextButton() {
-        waitUntilDisplayed(nextButton);
-        waitUntilClickable(nextButton);
-        clickElementUntil(nextButton);
+        utils.waitUntilDisplayed(nextButton);
+        utils.waitUntilClickable(nextButton);
+        utils.clickElementUntil(nextButton);
         log.info("Clicked on the nextButton on the LocationPermissionsScreen");
 
-        waitUntilDisplayed(onlyThisTimeButton);
-        clickElementUntil(onlyThisTimeButton);
+        utils.waitUntilDisplayed(onlyThisTimeButton);
+        utils.clickElementUntil(onlyThisTimeButton);
         log.info("Clicked on the onlyThisTimeButton on the LocationPermissionsScreen");
     }
 

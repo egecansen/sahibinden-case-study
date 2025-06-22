@@ -10,12 +10,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import utils.Printer;
 
-@Component
-public class HomeScreen extends Utils {
+
+public class HomeScreen {
 
     public Printer log = new Printer(HomeScreen.class);
+    Utils utils;
 
-    public void init(AppiumDriver driver) {
+    public HomeScreen(AppiumDriver driver) {
+        this.utils = new Utils(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='Local Affiliate logo']")
@@ -23,13 +25,13 @@ public class HomeScreen extends Utils {
 
 
     public void verifyLandedOnHomeScreen() {
-        waitUntilDisplayed(mainNavigationLogo);
+        utils.waitUntilDisplayed(mainNavigationLogo);
         log.success("mainNavigationLogo is displayed on the HomeScreen");
     }
 
 
     public void clickOnLocationsFromMainNavigation() {
-        clickElementUntil(mainNavigationLogo);
+        utils.clickElementUntil(mainNavigationLogo);
         log.info("Clicked mainNavigationLogo on the HomeScreen");
     }
 

@@ -9,19 +9,20 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import utils.Printer;
 
 import java.util.Arrays;
 import java.util.List;
 
-@Component
-public class WeatherInfoScreen extends Utils {
+
+public class WeatherInfoScreen {
 
     public Printer log = new Printer(WeatherInfoScreen.class);
+    Utils utils;
 
-    public void init(AppiumDriver driver) {
+    public WeatherInfoScreen(AppiumDriver driver) {
+        utils = new Utils(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -43,21 +44,21 @@ public class WeatherInfoScreen extends Utils {
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='10-DAY WEATHER FORECAST']/following-sibling::android.view.View[@content-desc]")
     public List<WebElement> weatherForecastItems;
 
-    public void swipeUntilCurrentConditionsDisplayed() {
-        waitUntilDisplayed(minuteCastBar);
-        swipeUntilFound(currentConditionsLabel, Direction.up);
-        log.success("currentConditionsLabel element is displayed on the WeatherInfoScreen");
+    public void swipeUntilCurrentConditionsSeeMoreButtonDisplayed() {
+        utils.waitUntilDisplayed(minuteCastBar);
+        utils.swipeUntilFound(seeMoreButton, Direction.up);
+        log.success("Current Conditions seeMoreButton element is displayed on the WeatherInfoScreen");
     }
 
     public void clickOnSeeMoreButton() {
-        waitUntilDisplayed(seeMoreButton);
-        clickElementUntil(seeMoreButton);
+        utils.waitUntilDisplayed(seeMoreButton);
+        utils.clickElementUntil(seeMoreButton);
         log.info("Clicked on seeMoreButton on the WeatherInfoScreen");
     }
 
     public void swipeUntilWeatherForecastBoxDisplayed() {
-        waitUntilDisplayed(minuteCastBar);
-        swipeUntilFound(weatherForecastBox, Direction.up);
+        utils.waitUntilDisplayed(minuteCastBar);
+        utils.swipeUntilFound(weatherForecastBox, Direction.up);
         log.success("weatherForecastBox element is displayed on the WeatherInfoScreen");
     }
 
@@ -84,10 +85,10 @@ public class WeatherInfoScreen extends Utils {
         String expectedMinTemp = ContextStore.get(date + " minTemperatureAPI").toString();
 
         Assert.assertEquals("Maximum temperature value on the screen does not match with the API response!", expectedMaxTemp, maxTemp);
-        log.success(date + " maximum temperature value verified as -> " + expectedMaxTemp);
+        log.success("Date " + date + " maximum temperature value verified as -> " + expectedMaxTemp);
 
         Assert.assertEquals("Minimum temperature value on the screen does not match with the API response!", expectedMinTemp, minTemp);
-        log.success(date + " minimum temperature value verified as -> " + expectedMinTemp);
+        log.success("Date " + date + " minimum temperature value verified as -> " + expectedMinTemp);
     }
 
 }

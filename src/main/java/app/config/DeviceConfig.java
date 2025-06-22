@@ -15,4 +15,5 @@ public class DeviceConfig {
         this.appiumPort = appiumPort;
     }
 
+
 }

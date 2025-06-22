@@ -18,10 +18,6 @@ public class AccuWeatherSteps {
 
     private Printer log = new Printer(AccuWeatherSteps.class);
 
-    public AccuWeatherSteps() {
-        ContextStore.loadProperties("test.properties");
-    }
-
 
     public void saveTargetLocationWeatherInfoToContext() {
         Location targetLocation = Location.valueOf(ContextStore.get("location"));

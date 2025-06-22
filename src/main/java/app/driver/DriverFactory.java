@@ -1,6 +1,5 @@
 package app.driver;
 
-import app.common.DevicePool;
 import app.config.DeviceConfig;
 import app.config.CommonCapabilities;
 import app.config.DynamicCapabilities;
@@ -13,9 +12,17 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import utils.Printer;
+import utils.SystemUtilities;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.URL;
 import java.time.Duration;
+
+import static utils.StringUtilities.Color.PURPLE;
+import static utils.StringUtilities.Color.RESET;
+import static utils.StringUtilities.highlighted;
 
 @Component
 public class DriverFactory {
@@ -23,7 +30,6 @@ public class DriverFactory {
     private final CommonCapabilities commonCapabilities;
     private AppiumDriverLocalService service;
     private final Printer log = new Printer(DriverFactory.class);
-
     @Autowired
     public DriverFactory(CommonCapabilities driverConfig) {
         this.commonCapabilities = driverConfig;
@@ -33,8 +39,8 @@ public class DriverFactory {
         log.info("Starting Appium service on port: " + deviceConfig.getAppiumPort());
         service = new AppiumServiceBuilder()
                 .withArgument(GeneralServerFlag.LOG_LEVEL, ContextStore.get("appiumLogLevel"))
-                .withIPAddress("127.0.0.1")
-                .usingPort(deviceConfig.getAppiumPort())
+                .withIPAddress(ContextStore.get("default-address").toString())
+                .usingPort(getPort(deviceConfig))
                 .withTimeout(Duration.ofSeconds(60))
                 .build();
         service.start();
@@ -49,8 +55,10 @@ public class DriverFactory {
         );
         log.info("Capabilities: ");
         capabilities.asMap().forEach((k, v) -> log.info(k + " = " + v));
+
         try {
-            return new AppiumDriver(new URL("http://127.0.0.1:" + deviceConfig.getAppiumPort() + "/"), capabilities);
+            log.important("Starting service on " + ContextStore.get("default-address").toString() + ":" + getPort(deviceConfig));
+            return new AppiumDriver(new URL("http://" + ContextStore.get("default-address").toString() + ":" + getPort(deviceConfig) + "/"), capabilities);
         } catch (Exception e) {
             throw new RuntimeException("Failed to start Appium Driver", e);
         }
@@ -62,4 +70,16 @@ public class DriverFactory {
             service.stop();
         }
     }
+
+    public int getPort(DeviceConfig deviceConfig) {
+        int port;
+        if (Boolean.parseBoolean(ContextStore.get("use-default-device"))) {
+            port = Integer.parseInt(ContextStore.get("default-port"));
+        }
+        else {
+            port = deviceConfig.getAppiumPort();
+        }
+        return port;
+    }
+
 }

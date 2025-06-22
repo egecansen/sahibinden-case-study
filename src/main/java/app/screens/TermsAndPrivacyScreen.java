@@ -10,12 +10,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import utils.Printer;
 
-@Component
-public class TermsAndPrivacyScreen extends Utils {
+
+public class TermsAndPrivacyScreen {
 
     public Printer log = new Printer(TermsAndPrivacyScreen.class);
+    Utils utils;
 
-    public void init(AppiumDriver driver) {
+    public TermsAndPrivacyScreen(AppiumDriver driver) {
+        utils = new Utils(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -24,8 +26,8 @@ public class TermsAndPrivacyScreen extends Utils {
 
 
     public void clickAgreeAndContinueButton() {
-        waitUntilClickable(agreeAndContinueButton);
-        clickElementUntil(agreeAndContinueButton);
+        utils.waitUntilClickable(agreeAndContinueButton);
+        utils.clickElementUntil(agreeAndContinueButton);
         log.info("Clicked on the agreeAndContinueButton on the TermsAndPrivacyScreen");
     }
 

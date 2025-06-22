@@ -11,12 +11,15 @@ import org.springframework.stereotype.Component;
 import utils.Printer;
 
 
-@Component
-public class GetStartedScreen extends Utils {
+
+public class GetStartedScreen {
 
     public Printer log = new Printer(GetStartedScreen.class);
+    private AppiumDriver driver;
+    Utils utils;
 
-    public void init(AppiumDriver driver) {
+    public GetStartedScreen(AppiumDriver driver) {
+        this.utils = new Utils(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -24,9 +27,9 @@ public class GetStartedScreen extends Utils {
     public WebElement getStartedButton;
 
     public void clickGetStartedButton() {
-        waitUntilDisplayed(getStartedButton);
-        waitUntilClickable(getStartedButton);
-        clickElementUntil(getStartedButton);
+        utils.waitUntilDisplayed(getStartedButton);
+        utils.waitUntilClickable(getStartedButton);
+        utils.clickElementUntil(getStartedButton);
         log.info("Clicked on the getStartedButton on the GetStartedScreen");
     }
 

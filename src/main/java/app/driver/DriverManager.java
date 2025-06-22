@@ -11,11 +11,17 @@ public class DriverManager {
     }
 
     public static AppiumDriver getDriver() {
-        return driverThread.get();
+        AppiumDriver driver = driverThread.get();
+        if (driver == null)
+            throw new IllegalStateException("Appium driver is not initialized!");
+        if (driver.getSessionId() == null)
+            throw new IllegalStateException("Appium session is already closed!");
+        return driver;
     }
 
     public static void removeDriver() {
         driverThread.remove();
     }
+
 
 }

@@ -1,8 +1,11 @@
 package app.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.annotation.Nullable;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CurrentConditionsResponseModel {
 
     String LocalObservationDateTime;
@@ -10,6 +13,7 @@ public class CurrentConditionsResponseModel {
     String WeatherText;
     int WeatherIcon;
     boolean HasPrecipitation;
+    @Nullable
     String PrecipitationType;
     boolean IsDayTime;
     Temperature Temperature;

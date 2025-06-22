@@ -8,16 +8,14 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import utils.Printer;
 
-@Component
-public class CurrentConditionsScreen extends Utils {
+
+public class CurrentConditionsScreen {
 
     public Printer log = new Printer(CurrentConditionsScreen.class);
 
-    public void init(AppiumDriver driver) {
+    public CurrentConditionsScreen(AppiumDriver driver) {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 

@@ -1,10 +1,12 @@
 package app.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.annotation.Nullable;
 import lombok.Getter;
-
 import java.util.List;
 
 @Getter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FiveDaysForecastResponseModel {
 
     Headline Headline;
@@ -61,6 +63,10 @@ public class FiveDaysForecastResponseModel {
             int Icon;
             String IconPhrase;
             boolean HasPrecipitation;
+            @Nullable
+            String PrecipitationType;
+            @Nullable
+            String PrecipitationIntensity;
         }
 
         @Getter
@@ -68,6 +74,10 @@ public class FiveDaysForecastResponseModel {
             int Icon;
             String IconPhrase;
             boolean HasPrecipitation;
+            @Nullable
+            String PrecipitationType;
+            @Nullable
+            String PrecipitationIntensity;
         }
 
     }

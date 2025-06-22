@@ -10,12 +10,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import utils.Printer;
 
-@Component
-public class NotificationsScreen extends Utils {
+
+public class NotificationsScreen {
 
     public Printer log = new Printer(NotificationsScreen.class);
+    Utils utils;
 
-    public void init(AppiumDriver driver) {
+    public NotificationsScreen(AppiumDriver driver) {
+        utils = new Utils(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -27,13 +29,13 @@ public class NotificationsScreen extends Utils {
 
 
     public void clickNotificationsNextButton() {
-        waitUntilClickable(nextButton);
-        clickElementUntil(nextButton);
+        utils.waitUntilClickable(nextButton);
+        utils.clickElementUntil(nextButton);
         log.info("Clicked on the nextButton on the NotificationsScreen");
 
-        waitUntilDisplayed(allowNotificationsButton);
-        waitUntilClickable(allowNotificationsButton);
-        clickElementUntil(allowNotificationsButton);
+        utils.waitUntilDisplayed(allowNotificationsButton);
+        utils.waitUntilClickable(allowNotificationsButton);
+        utils.clickElementUntil(allowNotificationsButton);
         log.info("Clicked on the allowNotificationsButton on the NotificationsScreen");
     }
 }

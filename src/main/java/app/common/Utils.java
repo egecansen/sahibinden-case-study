@@ -27,23 +27,21 @@ import static java.util.Collections.singletonList;
 import static utils.StringUtilities.Color.BLUE;
 import static utils.StringUtilities.highlighted;
 
-@Component
-@Scope("prototype")
+
 public class Utils {
 
-    private AppiumDriver driver;
+    private final AppiumDriver driver;
 
     private final Printer log = new Printer(Utils.class);
 
-    public AppiumDriver getDriver() {
-        if (driver == null) {
-            driver = DriverManager.getDriver();
-            if (driver == null) {
-                throw new IllegalStateException("Appium driver is not initialized.");
-            }
-        }
-        return driver;
-    }
+    public Utils(AppiumDriver driver) { this.driver = driver; }
+
+    //public AppiumDriver getDriverriver {
+    //    if (driver == null) {
+    //        driver = DriverManager.driver;
+    //    }
+    //    return driver;
+    //}
 
     public void waitFor(int duration) {
         try {
@@ -54,7 +52,7 @@ public class Utils {
     }
 
     public void waitUntilAbsence(WebElement element) {
-        FluentWait<WebDriver> fluentWait = new FluentWait<>((WebDriver) getDriver())
+        FluentWait<WebDriver> fluentWait = new FluentWait<>((WebDriver)driver)
                 .withTimeout(Duration.ofSeconds(60))
                 .pollingEvery(Duration.ofSeconds(3))
                 .ignoring(NoSuchElementException.class, StaleElementReferenceException.class);
@@ -93,32 +91,32 @@ public class Utils {
         );
         sequence.addAction(new Pause(finger, ofMillis(250)));
         sequence.addAction(finger.createPointerUp(PointerInput.MouseButton.MIDDLE.asArg()));
-        performSequence(sequence, System.currentTimeMillis(), getDriver());
+        performSequence(sequence, System.currentTimeMillis(),driver);
         sequence.addAction(new Pause(finger, ofMillis(250)));
     }
 
     public void swipeInDirection(Direction direction) {
         log.info("Swiping " + highlighted(BLUE, direction.name().toLowerCase()));
         Point center = new Point(
-                getDriver().manage().window().getSize().getWidth() / 2,
-                getDriver().manage().window().getSize().getHeight() / 2
+               driver.manage().window().getSize().getWidth() / 2,
+               driver.manage().window().getSize().getHeight() / 2
         );
 
         Point destination = switch (direction) {
             case up -> new Point(
                     center.getX(),
-                    center.getY() - (3 * (getDriver().manage().window().getSize().getHeight() / 5))
+                    center.getY() - (3 * (driver.manage().window().getSize().getHeight() / 5))
             );
             case down -> new Point(
                     center.getX(),
-                    center.getY() + (3 * (getDriver().manage().window().getSize().getHeight() / 5))
+                    center.getY() + (3 * (driver.manage().window().getSize().getHeight() / 5))
             );
             case right -> new Point(
-                    center.getX() - (3 * (getDriver().manage().window().getSize().getWidth() / 4)),
+                    center.getX() - (3 * (driver.manage().window().getSize().getWidth() / 4)),
                     center.getY()
             );
             case left -> new Point(
-                    center.getX() + (3 * (getDriver().manage().window().getSize().getWidth() / 4)),
+                    center.getX() + (3 * (driver.manage().window().getSize().getWidth() / 4)),
                     center.getY()
             );
         };
@@ -132,10 +130,8 @@ public class Utils {
         while (System.currentTimeMillis() - startTime < duration) {
             try {
                if (element.isDisplayed()){
-                   swipeInDirection(direction);
                    break;
                }
-                System.out.println("text: " + element.getText());
             } catch (NoSuchElementException e) {
                 swipeInDirection(direction);
             }
@@ -143,7 +139,7 @@ public class Utils {
     }
 
     public void waitUntilDisplayed(WebElement element) {
-        FluentWait<WebDriver> fluentWait = new FluentWait<>(getDriver());
+        FluentWait<WebDriver> fluentWait = new FluentWait<>(driver);
 
         fluentWait.withTimeout(Duration.ofSeconds(30))
                 .pollingEvery(Duration.ofSeconds(3))
@@ -153,7 +149,7 @@ public class Utils {
             log.info("Waiting the element to be displayed");
             fluentWait.until(webDriver -> element.isDisplayed());
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
+            e.printStackTrace();
 
         }
     }
@@ -191,12 +187,14 @@ public class Utils {
     }
 
     public static void captureScreen(AppiumDriver driver, String screenshotName) {
+        screenshotName = screenshotName + "-" + NumericUtilities.randomNumber(1,1000);
         if (driver == null) {
             throw new RuntimeException("Driver is null!");
         }
         File src=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
         try {
-            FileUtils.copyFile(src, new File("src/test/resources/screenshots" + File.separator + screenshotName + "-" + NumericUtilities.randomNumber(1,1000) + ".png"));
+            FileUtils.copyFile(src, new File("src/test/resources/screenshots" + File.separator + screenshotName + ".png"));
+            new Printer(Utils.class).info("Screenshot saved as: " + screenshotName);
         }
         catch (IOException e) {
             e.printStackTrace();

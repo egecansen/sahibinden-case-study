@@ -12,12 +12,14 @@ import org.springframework.stereotype.Component;
 import utils.Printer;
 
 
-@Component
-public class LocationsDropdownScreen extends Utils {
+
+public class LocationsDropdownScreen {
 
     public Printer log = new Printer(LocationsDropdownScreen.class);
+    Utils utils;
 
-    public void init(AppiumDriver driver) {
+    public LocationsDropdownScreen(AppiumDriver driver) {
+        utils = new Utils(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
     }
 
@@ -32,17 +34,17 @@ public class LocationsDropdownScreen extends Utils {
 
     public void searchTargetLocation() {
         String targetLocation = ContextStore.get("location");
-        waitUntilDisplayed(searchBar);
-        waitUntilClickable(searchBar);
-        clickElementUntil(searchBar);
+        utils.waitUntilDisplayed(searchBar);
+        utils.waitUntilClickable(searchBar);
+        utils.clickElementUntil(searchBar);
 
         log.info("Filling the search input with target location: " + targetLocation);
         searchInput.sendKeys(targetLocation);
 
-        waitUntilDisplayed(firstResult);
+        utils.waitUntilDisplayed(firstResult);
         log.info("Results are displayed");
-        waitUntilClickable(firstResult);
-        clickElementUntil(firstResult);
+        utils.waitUntilClickable(firstResult);
+        utils.clickElementUntil(firstResult);
         log.info("Clicked on the firstResult on the LocationsDropdownScreen");
     }
 }

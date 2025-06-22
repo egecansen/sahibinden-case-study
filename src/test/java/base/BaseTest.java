@@ -5,17 +5,17 @@ import app.common.DevicePool;
 import app.common.Utils;
 import app.config.DeviceConfig;
 import app.driver.Driver;
+import app.driver.DriverManager;
+import context.ContextStore;
 import io.appium.java_client.AppiumDriver;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInfo;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
 @SpringBootTest(classes = SahibindenCaseStudyApplication.class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 public class BaseTest {
 
     @Autowired
@@ -23,25 +23,21 @@ public class BaseTest {
     @Autowired
     private ApplicationContext applicationContext;
     protected AppiumDriver driver;
-    private DeviceConfig deviceConfig;
-    protected DevicePool devicePool = DevicePool.getInstance();
+
 
     @BeforeEach
     public void setup() {
+        ContextStore.loadProperties("test.properties");
         driverService = applicationContext.getBean(Driver.class);
-        deviceConfig = devicePool.acquireDevice();
-        driverService.initialize(deviceConfig);
-        driver = driverService.getDriver();
+        driverService.initialize();
+        driver = DriverManager.getDriver();
     }
 
     @AfterEach
     public void teardown(TestInfo context) {
         if (driver != null) {
-            Utils.captureScreen(driver, context.getDisplayName());
+            Utils.captureScreen(driver, context.getTags().stream().findFirst().orElse("NoTag"));
             driverService.terminate();
-        }
-        if (deviceConfig != null) {
-            devicePool.releaseDevice(deviceConfig);
         }
     }
 }
