@@ -20,5 +20,7 @@ services:
       - "4723:4723"
     environment:
       - RELAXED_SECURITY=true
+    volumes:
+      - ./jenkins_home/workspace:/var/jenkins_home/workspace:ro
     command: [ "appium", "--allow-insecure", "chromedriver_autodownload" ]
     restart: unless-stopped
