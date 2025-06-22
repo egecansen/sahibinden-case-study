@@ -33,6 +33,5 @@ build/
 /src/test/resources/screenshots/
 /src/test/resources/.DS_Store
 *jenkins_home/
-/src/test/resources/apks/AccuWeather.apk
 /src/test/resources/configurations/
 src/test/resources/apks/.DS_Store
