@@ -29,7 +29,7 @@ pipeline {
         }
       }
     }
-    stage("Debug props") {
+    stage("Log properties") {
       steps {
         sh 'cat src/test/resources/test.properties'
       }
@@ -44,12 +44,19 @@ pipeline {
       steps {
         sh 'mvn surefire-report:report'
       }
+      when {
+        always()
+      }
     }
 
     stage("Debug: List Files") {
       steps {
         sh "ls -l target/site/"
       }
+      when {
+        always()
+      }
+
     }
   }
 }
