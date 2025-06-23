@@ -19,6 +19,7 @@ This project is a automation testing framework built with JUnit 5, Appium, and S
 - JUnit 5
 - Spring Boot 3.x
 - Selenium 4.25.x
+- Docker (optional for CI/CD)
 
 
 ## Getting Started
@@ -107,10 +108,8 @@ The HTML report can be emailed by providing credentials and setting the send-rep
 
 This project is designed for CI/CD integration using Jenkins and Docker. All dependencies are installed inside the Jenkins container automatically.
 
-1. Prerequisites
-- Docker
   
-2. Start Jenkins & Appium with Docker
+1. Start Jenkins & Appium with Docker
 
 ```bash
 docker compose up -d
@@ -132,7 +131,7 @@ How to use:
 
 _Make sure your Android emulator is running and listening for TCP connections._
 
-3. Jenkins Initial Setup
+2. Jenkins Initial Setup
    
 On first launch, Jenkins will ask for an admin password, find it in jenkins_home/secrets/initialAdminPassword.
 Simply copy & paste this command to your terminal:
