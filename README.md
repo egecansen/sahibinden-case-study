@@ -103,15 +103,21 @@ _Reports can be found at target/site/surefire-report.html_
     junit.jupiter.execution.parallel.config.strategy = fixed
     junit.jupiter.execution.parallel.config.fixed.parallelism = 2
 
+_By the help of the recources on pom.xml, all .properties files in the source folder are automatically included in the build, so configuration files are always available when the application runs. 
+Additionally, after tests are executed, the generated HTML test report is automatically included in the post-report target directory. 
+This allows the module responsible for sending emails to access and attach the latest report without any manual copying or file moving on your part._
 
-## Reporting & Notifications
+## Reporting
 
 Reports are generated via Maven Surefire (target/site/surefire-report.html).
 The HTML report can be emailed by providing credentials and setting the `send-report-email` property to true.
 
-By the help of the recources on pom.xml, all .properties files in the source folder are automatically included in the build, so configuration files are always available when the application runs. 
-Additionally, after tests are executed, the generated HTML test report is automatically included in the post-report target directory. 
-This allows the module responsible for sending emails to access and attach the latest report without any manual copying or file moving on your part.
+Test report emails are handled by a separate Maven project in the post-report folder.
+After tests complete, Jenkins runs the email sender from this folder using:
+
+```bash
+mvn clean install exec:java
+```
 
 
 ## CI/CD
@@ -156,15 +162,5 @@ Follow the UI prompts to install plugins and set up an admin user.
 
 Trigger builds via Jenkins UI or webhooks for automated CI/CD.
 Test results and reports will be generated and can be viewed or emailed according to your configuration.
-
-
-## Email Reports 
-
-Test report emails are handled by a separate Maven project in the post-report folder.
-After tests complete, Jenkins runs the email sender from this folder using:
-
-```bash
-mvn clean install exec:java
-```
 
 Credentials and settings are injected at runtime via Jenkins.
