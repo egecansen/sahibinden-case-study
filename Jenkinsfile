@@ -40,23 +40,11 @@ pipeline {
         sh "mvn clean test"
       }
     }
-    stage('Generate Report') {
-      steps {
-        sh 'mvn surefire-report:report'
-      }
-      when {
-        always()
-      }
-    }
 
-    stage("Debug: List Files") {
-      steps {
-        sh "ls -l target/site/"
-      }
-      when {
-        always()
-      }
-
+post {
+    always {
+      sh 'mvn surefire-report:report'
+      sh 'ls -l target/site/'
     }
   }
 }
