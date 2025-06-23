@@ -21,6 +21,8 @@ public class SahibindenCaseStudyApplicationTests extends BaseTest {
 
 	@Test @Tag("Case1") @DisplayName("Verify the Forecast data between UI screen and API response")
 	public void foreCastFlow() {
+		factory.homeScreen().basic();
+
 		factory.getStartedScreen().clickGetStartedButton();
 		factory.termsAndPrivacyScreen().clickAgreeAndContinueButton();
 		factory.locationPermissionsScreen().clickLocationAndPermissionsNextButton();

@@ -51,17 +51,14 @@ public class BaseTest {
     @AfterEach
     public void teardown(TestInfo testInfo) {
         if (driver != null) {
-            if (TestStatus.isFailed()) {
+            if (TestStatus.isFailed())
                 Utils.captureScreen(driver, testInfo.getTags().stream().findFirst().orElse("NoTag"));
-                if (Boolean.parseBoolean(ContextStore.get("send-report-email", "false"))) {
-                    log.important("Sending the report email...");
-                    Utils.sendReportEmail();
-                }
-
+            if (Boolean.parseBoolean(ContextStore.get("send-report-email", "false"))) {
+                log.important("Sending the report email...");
+                Utils.sendReportEmail();
             }
             driverService.terminate();
         }
-
 
     }
 }

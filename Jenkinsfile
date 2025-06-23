@@ -29,6 +29,11 @@ pipeline {
         }
       }
     }
+    stage("Debug props") {
+      steps {
+        sh 'cat src/test/resources/test.properties'
+      }
+    }
     stage("Run Tests") {
       steps {
         sh "mvn clean surefire-report:report"
