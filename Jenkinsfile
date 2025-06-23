@@ -40,7 +40,7 @@ pipeline {
     }
     stage("Log test properties") {
       steps {
-        sh 'cat tests/src/main/resources/test.properties'
+        sh 'cat tests/src/test/resources/test.properties'
       }
     }
     stage("Log email properties") {
