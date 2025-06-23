@@ -87,7 +87,7 @@ _test.properties_
     email-host=smtp.gmail.com
     sender-email={sender.email}
     receiver-email={receiver.email}
-    email-application-password={applicatio.password}
+    email-application-password={application.password}
 
     
 _junit-platform.properties_
