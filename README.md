@@ -107,6 +107,18 @@ _By the help of the recources on pom.xml, all .properties files in the source fo
 Additionally, after tests are executed, the generated HTML test report is automatically included in the post-report target directory. 
 This allows the module responsible for sending emails to access and attach the latest report without any manual copying or file moving on your part._
 
+## Reporting
+
+Reports are generated via Maven Surefire (target/site/surefire-report.html).
+The HTML report can be emailed by providing credentials and setting the `send-report-email` property to true.
+
+Test report emails are handled by a separate Maven project in the post-report folder.
+After tests complete, Jenkins runs the email sender from this folder using:
+
+```bash
+mvn clean install exec:java
+```
+
 ## Test Structure
 
 
@@ -124,19 +136,6 @@ API tests use a custom library layered on Retrofit & OkHttp for seamless integra
 * Step classes handle API calls and store relevant results in the test context for easy comparison with UI results.
 * Model classes are located in the models package.
 * API keys and parameters are configured in `test.properties`
-
-
-## Reporting
-
-Reports are generated via Maven Surefire (target/site/surefire-report.html).
-The HTML report can be emailed by providing credentials and setting the `send-report-email` property to true.
-
-Test report emails are handled by a separate Maven project in the post-report folder.
-After tests complete, Jenkins runs the email sender from this folder using:
-
-```bash
-mvn clean install exec:java
-```
 
 
 ## CI/CD
