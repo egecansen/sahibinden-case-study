@@ -144,7 +144,7 @@ mvn clean install exec:java
 Project is designed for CI/CD integration using Jenkins and Docker. All dependencies are installed inside the Jenkins container automatically.
 To be able to run on pipeline, make sure `use-remote-appium` property is set to true.
   
-1. Start Jenkins & Appium with Docker
+1. Starting Jenkins & Appium with Docker
 
 ```bash
 docker compose up -d
@@ -166,7 +166,7 @@ How to use:
 
 _Make sure your Android emulator is running and listening for TCP connections._
 
-2. Jenkins Initial Setup
+2. Jenkins Setup
    
 On first launch, Jenkins will ask for an admin password, find it in jenkins_home/secrets/initialAdminPassword.
 Simply copy & paste this command to your terminal:
@@ -177,7 +177,7 @@ docker exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 
 Follow the UI prompts to install plugins and set up an admin user.
 
-3. Run Your Tests
+3. Run Tests
 
 Trigger builds via Jenkins UI or webhooks for automated CI/CD.
 Test results and reports will be generated and can be viewed or emailed according to your configuration.
