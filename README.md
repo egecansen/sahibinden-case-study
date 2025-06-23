@@ -25,22 +25,24 @@ This project is a modern, modular automation testing framework built with JUnit 
 
 Clone the repository:
 
-    ```yml
-    git clone https://github.com/your-org/your-mobile-automation-project.git
-    cd your-mobile-automation-project
-    ```
+```bash
+git clone https://github.com/your-org/your-mobile-automation-project.git
+cd your-mobile-automation-project
+```
+
 
 Build the project:
 
-    ```yml
-    mvn clean install
-    ```
+```bash
+mvn clean install
+```
+
 
 Run
 
-    ```yml
+
     mvn clean test
-    ```
+
 
 To Run with Reporting
 
