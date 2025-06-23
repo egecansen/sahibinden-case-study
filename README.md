@@ -1,6 +1,8 @@
 # Overview
 
 This project is a automation testing framework built with JUnit 5, Appium, and Spring Boot, designed to support mobile automation.
+The project uses a Maven multi-module layout, where tests and post-report are sibling modules under a common parent.
+Each module declares the parent in its pom.xml
 
 ## Features
 
@@ -54,7 +56,7 @@ _Reports can be found at target/site/surefire-report.html_
 
 ## Configuration
 
-_application.properties_
+`application.properties`
 
     appium.platformName=Android
     appium.automationName=uiautomator2
@@ -67,7 +69,7 @@ _application.properties_
     appium.apk=src/test/resources/apks/AccuWeather.apk
 
 
-_test.properties_
+`test.properties`
 
     appiumLogLevel=warn
 
@@ -83,6 +85,9 @@ _test.properties_
     use-remote-appium=false
     default-remote-udid=host.docker.internal:5555
 
+    
+`email.properties`
+
     send-report-email=false
     keep-email-logs=false
     email-host=smtp.gmail.com
@@ -91,23 +96,34 @@ _test.properties_
     email-application-password={application.password}
 
     
-_junit-platform.properties_
+`junit-platform.properties`
 
     junit.jupiter.execution.parallel.enabled = false
     junit.jupiter.execution.parallel.mode.default = concurrent
     junit.jupiter.execution.parallel.config.strategy = fixed
     junit.jupiter.execution.parallel.config.fixed.parallelism = 2
 
+_By the help of the recources on pom.xml, all .properties files in the source folder are automatically included in the build, so configuration files are always available when the application runs. 
+Additionally, after tests are executed, the generated HTML test report is automatically included in the post-report target directory. 
+This allows the module responsible for sending emails to access and attach the latest report without any manual copying or file moving on your part._
 
-## Reporting & Notifications
+## Reporting
 
 Reports are generated via Maven Surefire (target/site/surefire-report.html).
-The HTML report can be emailed by providing credentials and setting the send-report-email property to true.
+The HTML report can be emailed by providing credentials and setting the `send-report-email` property to true.
+
+Test report emails are handled by a separate Maven project in the post-report folder.
+After tests complete, Jenkins runs the email sender from this folder using:
+
+```bash
+mvn clean install exec:java
+```
+
 
 ## CI/CD
 
-This project is designed for CI/CD integration using Jenkins and Docker. All dependencies are installed inside the Jenkins container automatically.
-**To be able to run on pipeline, make sure use-remote-appium property is set to true.**
+Project is designed for CI/CD integration using Jenkins and Docker. All dependencies are installed inside the Jenkins container automatically.
+To be able to run on pipeline, make sure `use-remote-appium` property is set to true.
   
 1. Start Jenkins & Appium with Docker
 
@@ -117,8 +133,8 @@ docker compose up -d
 _This will build and start both Jenkins and Appium in containers configured to work together._
 _If your Docker install uses the old CLI, use docker-compose up -d instead._
 
-- Jenkins UI: http://localhost:8088
-- Appium server: localhost:4723
+- Jenkins UI: `http://localhost:8088`
+- Appium server: `localhost:4723`
 
 **Device Connection**
 
@@ -142,7 +158,9 @@ docker exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 
 Follow the UI prompts to install plugins and set up an admin user.
 
-4. Run Your Tests
+3. Run Your Tests
 
 Trigger builds via Jenkins UI or webhooks for automated CI/CD.
 Test results and reports will be generated and can be viewed or emailed according to your configuration.
+
+Credentials and settings are injected at runtime via Jenkins.
