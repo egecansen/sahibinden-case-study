@@ -1,13 +1,12 @@
 pipeline {
   agent any
 
-
-    environment {
-        APIKEY = credentials("accuweather-apikey")
-        EMAILPW = credentials("gmail-app-password")
-        SENDER = credentials("receiver-email")
-        RECEIVER = credentials("sender-email")
-    }
+  environment {
+    APIKEY  = credentials("accuweather-apikey")
+    EMAILPW = credentials("gmail-app-password")
+    SENDER  = credentials("sender-email")
+    RECEIVER = credentials("receiver-email")
+  }
 
   stages {
     stage("Download APK") {
@@ -19,17 +18,17 @@ pipeline {
       }
     }
     stage("Inject secrets into properties") {
-                steps {
-                    // Use Groovy to update the properties file
-                    script {
-                         def props = readFile "test.properties"
-                         props = props.replace("apikey={your.accuweather.api.key}", "apikey=${env.APIKEY}")
-                         props = props.replace("email-application-password={application.password}", "email-application-password=${env.EMAILPW}")
-                         props = props.replace("sender-email={sender.email}", "sender-email=${env.SENDER}")
-                         props = props.replace("receiver-email={receiver.email}", "receiver-email=${env.RECEIVER}")
-                         writeFile file: "test.properties", text: props
-                    }
-                }
+      steps {
+        script {
+          def props = readFile "test.properties"
+          props = props.replace("apikey={your.accuweather.api.key}", "apikey=${env.APIKEY}")
+          props = props.replace("email-application-password={application.password}", "email-application-password=${env.EMAILPW}")
+          props = props.replace("sender-email={sender.email}", "sender-email=${env.SENDER}")
+          props = props.replace("receiver-email={receiver.email}", "receiver-email=${env.RECEIVER}")
+          writeFile file: "test.properties", text: props
+        }
+      }
+    }
     stage("Run Tests") {
       steps {
         sh "mvn clean surefire-report:report"
