@@ -107,21 +107,25 @@ _By the help of the recources on pom.xml, all .properties files in the source fo
 Additionally, after tests are executed, the generated HTML test report is automatically included in the post-report target directory. 
 This allows the module responsible for sending emails to access and attach the latest report without any manual copying or file moving on your part._
 
-## Test
+## Test Structure
 
-***API*** 
+1. **API Automation**
 
-API testing is handled using a custom library built on top of Retrofit & OkHttp. 
-Core classes like AccuWeatherServices define endpoints, while method classes and step definitions manage requests, parse responses, and store results in a shared context for verification.
-Models are organized in the models package. All API credentials and parameters are managed through test.properties.
+API tests use a custom library layered on Retrofit & OkHttp for seamless integration and request handling.
 
-***UI***
+* Endpoints and all related suffixes/prefixes are centrally managed.
+* Service interface define API contracts.
+* Step classes handle API calls and store relevant results in the test context for easy comparison with UI results.
+* Model classes are located in the models package.
+* API keys and parameters are configured in `test.properties`
 
-All UI automation is structured using the Page Object Model pattern for clean, maintainable tests.
-Each app screen is represented as a dedicated class under app.screens. 
-The ObjectFactory centralizes access to these screens and ensures each one is initialized with the current Appium driver.
-Test classes use the factory to chain user flows in a readable, step-by-step manner.
-Element locators and screen interactions are defined within their corresponding page classes.
+2. **UI**
+
+UI automation follows the Page Object Model for clarity and maintainability.
+
+* Each app screen has its own class under app.screens.
+* The ObjectFactory provides easy access to all screens, initializing each with the current Appium driver.
+* All element locators and screen actions defined in their respective page classes.
 
 
 ## Reporting
