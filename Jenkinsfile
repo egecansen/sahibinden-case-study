@@ -2,9 +2,9 @@ pipeline {
   agent any
 
   environment {
-    APIKEY  = credentials("accuweather-apikey")
-    EMAILPW = credentials("gmail-app-password")
-    SENDER  = credentials("sender-email")
+    APIKEY   = credentials("accuweather-apikey")
+    EMAILPW  = credentials("gmail-app-password")
+    SENDER   = credentials("sender-email")
     RECEIVER = credentials("receiver-email")
   }
 
@@ -20,12 +20,14 @@ pipeline {
     stage("Inject secrets into properties") {
       steps {
         script {
-          def emailProps = readFile "post-report/src/main/resources/email.properties"
-          def testProps = readFile "tests/src/main/resources/test.properties"
-          props = testProps.replace("apikey={your.accuweather.api.key}", "apikey=${env.APIKEY}")
-          props = emailProps.replace("email-application-password={application.password}", "email-application-password=${env.EMAILPW}")
-          props = emailProps.replace("sender-email={sender.email}", "sender-email=${env.SENDER}")
-          props = emailProps.replace("receiver-email={receiver.email}", "receiver-email=${env.RECEIVER}")
+          def emailProps = readFile("post-report/src/main/resources/email.properties")
+          def testProps = readFile("tests/src/main/resources/test.properties")
+
+          testProps = testProps.replace("apikey={your.accuweather.api.key}", "apikey=${env.APIKEY}")
+          emailProps = emailProps.replace("email-application-password={application.password}", "email-application-password=${env.EMAILPW}")
+          emailProps = emailProps.replace("sender-email={sender.email}", "sender-email=${env.SENDER}")
+          emailProps = emailProps.replace("receiver-email={receiver.email}", "receiver-email=${env.RECEIVER}")
+
           writeFile file: "post-report/src/main/resources/email.properties", text: emailProps
           writeFile file: "tests/src/main/resources/test.properties", text: testProps
         }
@@ -33,7 +35,7 @@ pipeline {
     }
     stage("Log test properties") {
       steps {
-        sh 'cat src/test/resources/test.properties'
+        sh 'cat tests/src/main/resources/test.properties'
       }
     }
     stage("Log email properties") {
@@ -41,20 +43,24 @@ pipeline {
         sh 'cat post-report/src/main/resources/email.properties'
       }
     }
-
     stage("Run Tests") {
       steps {
-        sh "mvn clean test"
+        dir("tests") {
+          sh "mvn clean test"
+        }
       }
     }
-    stage("Generate reports and run post-reports") {
-        steps {
-            dir("tests") {
-                sh "mvn surefire-report:report"
-            }
-            dir("post-report") {
-                sh "mvn clean install exec:java"
-            }
-        }
+  }
+
+  post {
+    always {
+      // These always run, even if a previous stage fails
+      dir("tests") {
+        sh "mvn surefire-report:report || true" // use '|| true' to avoid stopping on error
+      }
+      dir("post-report") {
+        sh "mvn clean install exec:java || true"
+      }
     }
+  }
 }
