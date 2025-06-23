@@ -107,15 +107,15 @@ _By the help of the recources on pom.xml, all .properties files in the source fo
 Additionally, after tests are executed, the generated HTML test report is automatically included in the post-report target directory. 
 This allows the module responsible for sending emails to access and attach the latest report without any manual copying or file moving on your part._
 
-## Test
+## Test
 
-### API
+***API*** 
 
 API testing is handled using a custom library built on top of Retrofit & OkHttp. 
 Core classes like AccuWeatherServices define endpoints, while method classes and step definitions manage requests, parse responses, and store results in a shared context for verification.
 Models are organized in the models package. All API credentials and parameters are managed through test.properties.
 
-### UI
+***UI***
 
 All UI automation is structured using the Page Object Model pattern for clean, maintainable tests.
 Each app screen is represented as a dedicated class under app.screens. 
