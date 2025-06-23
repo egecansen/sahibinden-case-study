@@ -17,20 +17,24 @@ pipeline {
         '''
       }
     }
+
     stage("Inject secrets into properties") {
       steps {
-        script {
-          def emailProps = readFile("post-report/src/main/resources/email.properties")
-          def testProps = readFile("tests/src/main/resources/test.properties")
-
-          emailProps = emailProps.replace("email-application-password={application.password}", "email-application-password=${env.EMAILPW}")
-          emailProps = emailProps.replace("sender-email={sender.email}", "sender-email=${env.SENDER}")
-          emailProps = emailProps.replace("receiver-email={receiver.email}", "receiver-email=${env.RECEIVER}")
-
-          testProps = testProps.replace("apikey={your.accuweather.api.key}", "apikey=${env.APIKEY}")
-
-          writeFile file: "post-report/src/main/resources/email.properties", text: emailProps
-          writeFile file: "tests/src/main/resources/test.properties", text: testProps
+        dir('tests/src/main/resources') {
+          script {
+            def testProps = readFile('test.properties')
+            testProps = testProps.replace("apikey={your.accuweather.api.key}", "apikey=${env.APIKEY}")
+            writeFile file: 'test.properties', text: testProps
+          }
+        }
+        dir('post-report/src/main/resources') {
+          script {
+            def emailProps = readFile('email.properties')
+            emailProps = emailProps.replace("email-application-password={application.password}", "email-application-password=${env.EMAILPW}")
+            emailProps = emailProps.replace("sender-email={sender.email}", "sender-email=${env.SENDER}")
+            emailProps = emailProps.replace("receiver-email={receiver.email}", "receiver-email=${env.RECEIVER}")
+            writeFile file: 'email.properties', text: emailProps
+          }
         }
       }
     }
