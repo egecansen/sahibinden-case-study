@@ -14,12 +14,12 @@ Designed for easy integration with **Jenkins** and **Docker**.
 
 ## Prerequisites
 
-Java 17
-Maven 3.5.x
-Appium 2.x (running locally or remotely)
-JUnit 5
-Spring Boot 3.x
-Selenium 4.25.x
+- Java 17
+- Maven 3.5.x
+- Appium 2.x 
+- JUnit 5
+- Spring Boot 3.x
+- Selenium 4.25.x
 
 
 ## Getting Started
