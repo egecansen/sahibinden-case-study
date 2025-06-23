@@ -158,7 +158,7 @@ docker exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 
 Follow the UI prompts to install plugins and set up an admin user.
 
-4. Run Your Tests
+3. Run Your Tests
 
 Trigger builds via Jenkins UI or webhooks for automated CI/CD.
 Test results and reports will be generated and can be viewed or emailed according to your configuration.
