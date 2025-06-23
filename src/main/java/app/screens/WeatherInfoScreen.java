@@ -9,7 +9,6 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.springframework.stereotype.Component;
 import utils.Printer;
 
 import java.util.Arrays;

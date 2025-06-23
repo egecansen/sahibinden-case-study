@@ -1,6 +1,5 @@
 package app.screens;
 
-import app.common.Utils;
 import context.ContextStore;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;

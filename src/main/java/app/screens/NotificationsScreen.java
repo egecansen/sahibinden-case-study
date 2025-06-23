@@ -6,8 +6,6 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import utils.Printer;
 
 
