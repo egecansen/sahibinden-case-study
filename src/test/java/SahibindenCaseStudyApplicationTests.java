@@ -39,6 +39,8 @@ public class SahibindenCaseStudyApplicationTests extends BaseTest {
 
 	@Test @Tag("Case2") @DisplayName("Verify the Current Conditions data between UI screen and API response")
 	public void currentConditionsFlow() {
+		factory.homeScreen().basic();
+
 		factory.getStartedScreen().clickGetStartedButton();
 		factory.termsAndPrivacyScreen().clickAgreeAndContinueButton();
 		factory.locationPermissionsScreen().clickLocationAndPermissionsNextButton();
