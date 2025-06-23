@@ -1,6 +1,8 @@
 # Overview
 
 This project is a automation testing framework built with JUnit 5, Appium, and Spring Boot, designed to support mobile automation.
+The project uses a Maven multi-module layout, where tests and post-report are sibling modules under a common parent.
+Each module declares the parent in its pom.xml
 
 ## Features
 
@@ -83,6 +85,9 @@ _test.properties_
     use-remote-appium=false
     default-remote-udid=host.docker.internal:5555
 
+    
+_email.properties_
+
     send-report-email=false
     keep-email-logs=false
     email-host=smtp.gmail.com
@@ -103,6 +108,7 @@ _junit-platform.properties_
 
 Reports are generated via Maven Surefire (target/site/surefire-report.html).
 The HTML report can be emailed by providing credentials and setting the send-report-email property to true.
+Seperated sibling
 
 ## CI/CD
 
@@ -146,3 +152,22 @@ Follow the UI prompts to install plugins and set up an admin user.
 
 Trigger builds via Jenkins UI or webhooks for automated CI/CD.
 Test results and reports will be generated and can be viewed or emailed according to your configuration.
+
+
+## Email Reports 
+
+Test report emails are handled by a separate Maven project in the post-report folder.
+After tests complete, Jenkins runs the email sender from this folder using:
+
+```bash
+mvn clean install exec:java
+```
+
+Credentials and settings are injected at runtime via Jenkins.
+
+By the help of the recources on pom.xml, all .properties files in the source folder are automatically included in the build, so configuration files are always available when the application runs. 
+Additionally, after tests are executed, the generated HTML test report is automatically included in the post-report target directory. 
+This allows the module responsible for sending emails to access and attach the latest report without any manual copying or file moving on your part.
+
+Email sending is optional, enable it by setting send-report-email=true in post-report/src/main/resources/email.properties.
+
