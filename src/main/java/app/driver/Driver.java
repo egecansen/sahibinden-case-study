@@ -28,7 +28,7 @@ public class Driver {
         log.info("Initializing the driver...");
         ContextStore.loadProperties("test.properties");
         if (Boolean.parseBoolean(ContextStore.get("use-default-device"))) {
-            log.important("Default device is selected");
+            log.warning("Default device is selected");
             deviceConfig = devicePool.getDefaultDevice();
         }
         else deviceConfig = devicePool.acquireDevice();
@@ -48,7 +48,7 @@ public class Driver {
                 devicePool.releaseDevice(deviceConfig);
             }
         } catch (Exception e) {
-            log.warning("Error during driver.quit: " + e.getMessage());
+            log.warning("Error during quiting the driver: " + e.getMessage());
         }
         try {
             driverFactory.stopService();

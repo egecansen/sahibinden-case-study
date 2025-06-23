@@ -1,7 +1,12 @@
 #!/bin/bash
+set -e
+
+# Start ADB server and connect to Android emulator/device
 adb start-server
 sleep 2
-adb connect host.docker.internal:5555
+adb connect host.docker.internal:5555 || true
+sleep 2
 adb devices
 
-tail -f /dev/null
+# Start Jenkins as the main process
+exec /usr/local/bin/jenkins.sh "$@"

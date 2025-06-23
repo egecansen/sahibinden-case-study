@@ -35,3 +35,4 @@ build/
 *jenkins_home/
 /src/test/resources/configurations/
 src/test/resources/apks/.DS_Store
+/src/test/resources/apks/AccuWeather.apk

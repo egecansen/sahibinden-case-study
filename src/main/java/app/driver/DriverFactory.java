@@ -37,7 +37,7 @@ public class DriverFactory {
 
     public void startService(DeviceConfig deviceConfig) {
         if (Boolean.parseBoolean(ContextStore.get("use-remote-appium", "false"))) {
-            log.important("Remote Appium mode enabled, NOT starting local Appium service");
+            log.warning("Remote Appium mode enabled, NOT starting local Appium service");
         } else {
             log.info("Starting Appium service on port: " + deviceConfig.getAppiumPort());
             service = new AppiumServiceBuilder()
@@ -67,7 +67,7 @@ public class DriverFactory {
             } else {
                 url = "http://" + ContextStore.get("default-address").toString() + ":" + getPort(deviceConfig) + "/";
             }
-            log.important("Connecting to Appium at " + url);
+            log.warning("Connecting to Appium at " + url);
             return new AppiumDriver(new URL(url), capabilities);
         } catch (Exception e) {
             throw new RuntimeException("Failed to start Appium Driver", e);

@@ -35,5 +35,10 @@ public class HomeScreen {
         log.info("Clicked mainNavigationLogo on the HomeScreen");
     }
 
+    public void basicClick() {
+        mainNavigationLogo.click();
+        log.info("Clicked mainNavigationLogo on the HomeScreen");
+    }
+
 
 }

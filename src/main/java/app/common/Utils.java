@@ -3,7 +3,12 @@ package app.common;
 import app.common.enums.Direction;
 import app.driver.Driver;
 import app.driver.DriverManager;
+import context.ContextStore;
 import io.appium.java_client.AppiumDriver;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Multipart;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMultipart;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Pause;
@@ -15,11 +20,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import utils.NumericUtilities;
 import utils.Printer;
+import utils.email.EmailUtilities;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Duration;
 
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import static java.time.Duration.ofMillis;
@@ -31,17 +40,10 @@ import static utils.StringUtilities.highlighted;
 public class Utils {
 
     private final AppiumDriver driver;
-
     private final Printer log = new Printer(Utils.class);
 
     public Utils(AppiumDriver driver) { this.driver = driver; }
 
-    //public AppiumDriver getDriverriver {
-    //    if (driver == null) {
-    //        driver = DriverManager.driver;
-    //    }
-    //    return driver;
-    //}
 
     public void waitFor(int duration) {
         try {
@@ -198,6 +200,30 @@ public class Utils {
         }
         catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void sendReportEmail() {
+        EmailClient emailClient = new EmailClient();
+        String contentType = "text/html; charset=utf-8";
+        String host = ContextStore.get("email-host").toString();
+        String sender = ContextStore.get("sender-email").toString();
+        String receiver = ContextStore.get("receiver-email").toString();
+        String appPassword = ContextStore.get("email-application-password").toString();
+        String subject = "AccuWeather Automation Report - Please find the attached test report.";
+
+        try {
+            String htmlContent = Files.readString(Paths.get("target/site/surefire-report.html"));
+            emailClient.sendEmail(host,
+                    subject,
+                    htmlContent ,
+                    contentType,
+                    receiver,
+                    sender,
+                    appPassword,
+                    null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

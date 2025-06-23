@@ -32,7 +32,7 @@ public class DevicePool {
     public DeviceConfig getDefaultDevice() {
         if (Boolean.parseBoolean(ContextStore.get("use-remote-appium", "false")))
             return new DeviceConfig(ContextStore.get("default-device-name"), ContextStore.get("default-remote-udid"), Integer.parseInt(ContextStore.get("default-port")));
-        return new DeviceConfig(ContextStore.get("default-device-name"), ContextStore.get("default-udid"), Integer.parseInt(ContextStore.get("default-port")));
+        else return new DeviceConfig(ContextStore.get("default-device-name"), ContextStore.get("default-udid"), Integer.parseInt(ContextStore.get("default-port")));
     }
 
 }
