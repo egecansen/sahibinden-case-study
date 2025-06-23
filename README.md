@@ -1,15 +1,15 @@
 # Overview
 
-This project is a modern, modular automation testing framework built with JUnit 5, Appium, and Spring Boot. Designed to support mobile automation for Android and iOS applications, the framework provides a scalable foundation for Test Automation as a Service (TaaS).
+This project is a automation testing framework built with JUnit 5, Appium, and Spring Boot, designed to support mobile automation.
 
 ## Features
 
-- **Appium** integration for mobile automation.
-- **JUnit 5**for test execution and tagging.
-- **Spring Boot** for configuration, modular design.
+- **Appium** for mobile automation.
+- **JUnit 5** for test execution.
+- **Spring Boot** for configuration.
 - Reporting with **Maven Surefire**.
-- Simple email notification with HTML test reports (optional).
-- Designed for easy integration with **Jenkins** and **Docker**.
+- Email notification with HTML test reports (optional).
+- **Jenkins** and **Docker** for CI/CD.
 
 ## Prerequisites
 
@@ -43,7 +43,7 @@ Run
 mvn clean test
 ```
 
-To Run with Reporting
+To Run with reporting
 
 ```bash
 mvn clean surefire-report:report 
@@ -98,19 +98,12 @@ _junit-platform.properties_
     junit.jupiter.execution.parallel.config.fixed.parallelism = 2
 
 
-## Writing Tests
-
-Write your test scenarios in Java using JUnit 5 (@Test, @Tag, etc).
-Modularize logic with screen classes and step classes for maintainability.
-Dependency injection is handled via Spring’s @Autowired components.
-
 ## Reporting & Notifications
 
 Reports are generated via Maven Surefire (target/site/surefire-report.html).
-The HTML report can be emailed automatically by providing credentials and setting the send-report-email property to true.
-Continuous Integration
+The HTML report can be emailed by providing credentials and setting the send-report-email property to true.
 
-## CI/CD with Jenkins & Docker
+## CI/CD
 
 This project is designed for CI/CD integration using Jenkins and Docker. All dependencies are installed inside the Jenkins container automatically.
 
@@ -125,8 +118,8 @@ docker compose up -d
 _This will build and start both Jenkins and Appium in containers configured to work together._
 _If your Docker install uses the old CLI, use docker-compose up -d instead._
 
-Jenkins UI: http://localhost:8088
-Appium server: localhost:4723
+- Jenkins UI: http://localhost:8088
+- Appium server: localhost:4723
 
 3. Jenkins Initial Setup
    
