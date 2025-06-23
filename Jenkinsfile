@@ -20,12 +20,12 @@ pipeline {
     stage("Inject secrets into properties") {
       steps {
         script {
-          def props = readFile "test.properties"
+          def props = readFile "src/test/resources/test.properties"
           props = props.replace("apikey={your.accuweather.api.key}", "apikey=${env.APIKEY}")
           props = props.replace("email-application-password={application.password}", "email-application-password=${env.EMAILPW}")
           props = props.replace("sender-email={sender.email}", "sender-email=${env.SENDER}")
           props = props.replace("receiver-email={receiver.email}", "receiver-email=${env.RECEIVER}")
-          writeFile file: "test.properties", text: props
+          writeFile file: "src/test/resources/test.properties", text: props
         }
       }
     }
