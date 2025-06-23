@@ -37,18 +37,17 @@ Build the project:
 mvn clean install
 ```
 
-
 Run
 
-
-    mvn clean test
-
+```bash
+mvn clean test
+```
 
 To Run with Reporting
 
-    ```yml
-    mvn clean surefire-report:report 
-    ```
+```bash
+mvn clean surefire-report:report 
+```
 
 _Reports can be found at target/site/surefire-report.html_
 
