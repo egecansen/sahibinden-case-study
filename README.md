@@ -4,13 +4,12 @@ This project is a modern, modular automation testing framework built with JUnit 
 
 ## Features
 
-**Appium** integration for mobile automation.
-**JUnit 5 **for test execution and tagging.
-**Spring Boot** for configuration, modular design.
-Reporting with **Maven Surefire**.
-Multi-device support.
-Simple email notification with HTML test reports (optional).
-Designed for easy integration with **Jenkins** and **Docker**.
+- **Appium** integration for mobile automation.
+- **JUnit 5**for test execution and tagging.
+- **Spring Boot** for configuration, modular design.
+- Reporting with **Maven Surefire**.
+- Simple email notification with HTML test reports (optional).
+- Designed for easy integration with **Jenkins** and **Docker**.
 
 ## Prerequisites
 
