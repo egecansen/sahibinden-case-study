@@ -29,8 +29,8 @@ Each module declares the parent in its pom.xml
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-org/your-mobile-automation-project.git
-cd your-mobile-automation-project
+git clone https://github.com/egecansen/sahibinden-case-study.git
+cd sahibinden-case-study
 ```
 
 
