@@ -1,8 +1,8 @@
-#Overview
+# Overview
 
 This project is a modern, modular automation testing framework built with JUnit 5, Appium, and Spring Boot. Designed to support mobile automation for Android and iOS applications, the framework provides a scalable foundation for Test Automation as a Service (TaaS).
 
-##Features
+## Features
 
 **Appium** integration for mobile automation.
 **JUnit 5 **for test execution and tagging.
@@ -12,7 +12,7 @@ Multi-device support.
 Simple email notification with HTML test reports (optional).
 Designed for easy integration with **Jenkins** and **Docker**.
 
-##Prerequisites
+## Prerequisites
 
 Java 17
 Maven 3.5.x
@@ -22,7 +22,7 @@ Spring Boot 3.x
 Selenium 4.25.x
 
 
-##Getting Started
+## Getting Started
 
 Clone the repository:
 
@@ -51,7 +51,7 @@ To Run with Reporting
 
 _Reports can be found at target/site/surefire-report.html_
 
-##Configuration
+## Configuration
 
 _application.properties_
 
@@ -98,13 +98,13 @@ _junit-platform.properties_
     junit.jupiter.execution.parallel.config.fixed.parallelism = 2
 
 
-##Writing Tests
+## Writing Tests
 
 Write your test scenarios in Java using JUnit 5 (@Test, @Tag, etc).
 Modularize logic with screen classes and step classes for maintainability.
 Dependency injection is handled via Spring’s @Autowired components.
 
-##Reporting & Notifications
+## Reporting & Notifications
 
 Reports are generated via Maven Surefire (target/site/surefire-report.html).
 The HTML report can be emailed automatically by providing credentials and setting the send-report-email property to true.
