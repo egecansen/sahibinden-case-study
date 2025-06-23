@@ -110,7 +110,35 @@ Reports are generated via Maven Surefire (target/site/surefire-report.html).
 The HTML report can be emailed automatically by providing credentials and setting the send-report-email property to true.
 Continuous Integration
 
-This framework is ready for CI/CD:
+## CI/CD with Jenkins & Docker
 
-Integrate with Jenkins or similar tools using Docker Compose.
-Test reports can be attached to build results or emailed.
+This project is designed for CI/CD integration using Jenkins and Docker. All dependencies are installed inside the Jenkins container automatically.
+
+1. Prerequisites
+- Docker
+  
+2. Start Jenkins & Appium with Docker
+
+```bash
+docker compose up -d
+```
+_This will build and start both Jenkins and Appium in containers configured to work together._
+_If your Docker install uses the old CLI, use docker-compose up -d instead._
+
+Jenkins UI: http://localhost:8088
+Appium server: localhost:4723
+
+3. Jenkins Initial Setup
+   
+On first launch, Jenkins will ask for an admin password, find it in jenkins_home/secrets/initialAdminPassword.
+Simply copy & paste this command to your terminal:
+
+```bash
+docker exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword
+```
+
+Follow the UI prompts to install plugins and set up an admin user.
+
+4. Run Your Tests
+Trigger builds via Jenkins UI or webhooks for automated CI/CD.
+Test results and reports will be generated and can be viewed or emailed according to your configuration.
