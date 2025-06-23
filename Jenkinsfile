@@ -34,14 +34,21 @@ pipeline {
         sh 'cat src/test/resources/test.properties'
       }
     }
+
+    stage("Run Tests") {
+      steps {
+        sh "mvn clean test"
+      }
+    }
+    stage('Generate Report') {
+      steps {
+        sh 'mvn surefire-report:report'
+      }
+    }
+
     stage("Debug: List Files") {
       steps {
         sh "ls -l target/site/"
-      }
-    }
-    stage("Run Tests") {
-      steps {
-        sh "mvn clean surefire-report:report"
       }
     }
   }
