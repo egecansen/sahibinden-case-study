@@ -44,10 +44,10 @@ Run
 mvn clean test
 ```
 
-To Run with reporting
+To generate reports after the execution
 
 ```bash
-mvn clean surefire-report:report 
+mvn surefire-report:report 
 ```
 
 _Reports can be found at target/site/surefire-report.html_
