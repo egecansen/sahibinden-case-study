@@ -204,6 +204,7 @@ public class Utils {
     }
 
     public static void sendReportEmail() {
+        new Printer(Utils.class).info("Sending the report email...");
         EmailClient emailClient = new EmailClient();
         String contentType = "text/html; charset=utf-8";
         String host = ContextStore.get("email-host").toString();
@@ -211,7 +212,6 @@ public class Utils {
         String receiver = ContextStore.get("receiver-email").toString();
         String appPassword = ContextStore.get("email-application-password").toString();
         String subject = "AccuWeather Automation Report - Please find the attached test report.";
-
         try {
             String htmlContent = Files.readString(Paths.get("target/site/surefire-report.html"));
             emailClient.sendEmail(host,
@@ -225,6 +225,7 @@ public class Utils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        new Printer(Utils.class).info("Report email is sent!");
     }
 
 }

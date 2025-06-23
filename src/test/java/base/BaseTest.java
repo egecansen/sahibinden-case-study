@@ -56,11 +56,10 @@ public class BaseTest {
             driverService.terminate();
         }
     }
-    
+
     @AfterAll
-    public void sendReport() {
+    public static void sendReport() {
         if (Boolean.parseBoolean(ContextStore.get("send-report-email", "false"))) {
-            log.important("Sending the report email...");
             Utils.sendReportEmail();
         }
     }
