@@ -53,12 +53,15 @@ public class BaseTest {
         if (driver != null) {
             if (TestStatus.isFailed())
                 Utils.captureScreen(driver, testInfo.getTags().stream().findFirst().orElse("NoTag"));
-            if (Boolean.parseBoolean(ContextStore.get("send-report-email", "false"))) {
-                log.important("Sending the report email...");
-                Utils.sendReportEmail();
-            }
             driverService.terminate();
         }
-
+    }
+    
+    @AfterAll
+    public void sendReport() {
+        if (Boolean.parseBoolean(ContextStore.get("send-report-email", "false"))) {
+            log.important("Sending the report email...");
+            Utils.sendReportEmail();
+        }
     }
 }
