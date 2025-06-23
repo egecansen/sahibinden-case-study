@@ -107,7 +107,7 @@ The HTML report can be emailed by providing credentials and setting the send-rep
 ## CI/CD
 
 This project is designed for CI/CD integration using Jenkins and Docker. All dependencies are installed inside the Jenkins container automatically.
-
+**To be able to run on pipeline, make sure use-remote-appium property is set to true.**
   
 1. Start Jenkins & Appium with Docker
 
@@ -143,6 +143,6 @@ docker exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 Follow the UI prompts to install plugins and set up an admin user.
 
 4. Run Your Tests
-**To be able to run on pipeline, make sure use-remote-appium property is set to true.**
+
 Trigger builds via Jenkins UI or webhooks for automated CI/CD.
 Test results and reports will be generated and can be viewed or emailed according to your configuration.
