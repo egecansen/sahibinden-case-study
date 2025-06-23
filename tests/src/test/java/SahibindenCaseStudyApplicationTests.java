@@ -1,8 +1,6 @@
 import app.api.steps.AccuWeatherSteps;
-import app.common.Utils;
 import app.screens.factory.ObjectFactory;
 import base.BaseTest;
-import context.ContextStore;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,12 +12,6 @@ public class SahibindenCaseStudyApplicationTests extends BaseTest {
 	@Autowired
 	private AccuWeatherSteps accuWeatherSteps;
 
-	@AfterAll
-	public static void sendReport() {
-		if (Boolean.parseBoolean(ContextStore.get("send-report-email", "false"))) {
-			Utils.sendReportEmail();
-		}
-	}
 
 	@Test @Tag("Case1") @DisplayName("Verify the Forecast data between UI screen and API response")
 	public void foreCastFlow() {

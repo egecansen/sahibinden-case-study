@@ -30,9 +30,9 @@ build/
 !**/src/test/**/build/
 
 .vscode/
-/src/test/resources/screenshots/
-/src/test/resources/.DS_Store
+/tests/src/test/resources/screenshots/
+/tests/src/test/resources/.DS_Store
 *jenkins_home/
-/src/test/resources/configurations/
-src/test/resources/apks/.DS_Store
-/src/test/resources/apks/AccuWeather.apk
+/tests/src/test/resources/configurations/
+tests/src/test/resources/apks/.DS_Store
+/tests/src/test/resources/apks/AccuWeather.apk

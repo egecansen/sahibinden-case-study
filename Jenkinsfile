@@ -20,31 +20,41 @@ pipeline {
     stage("Inject secrets into properties") {
       steps {
         script {
-          def props = readFile "src/test/resources/test.properties"
-          props = props.replace("apikey={your.accuweather.api.key}", "apikey=${env.APIKEY}")
-          props = props.replace("email-application-password={application.password}", "email-application-password=${env.EMAILPW}")
-          props = props.replace("sender-email={sender.email}", "sender-email=${env.SENDER}")
-          props = props.replace("receiver-email={receiver.email}", "receiver-email=${env.RECEIVER}")
-          writeFile file: "src/test/resources/test.properties", text: props
+          def emailProps = readFile "post-report/src/main/resources/email.properties"
+          def testProps = readFile "tests/src/main/resources/test.properties"
+          props = testProps.replace("apikey={your.accuweather.api.key}", "apikey=${env.APIKEY}")
+          props = emailProps.replace("email-application-password={application.password}", "email-application-password=${env.EMAILPW}")
+          props = emailProps.replace("sender-email={sender.email}", "sender-email=${env.SENDER}")
+          props = emailProps.replace("receiver-email={receiver.email}", "receiver-email=${env.RECEIVER}")
+          writeFile file: "post-report/src/main/resources/email.properties", text: emailProps
+          writeFile file: "tests/src/main/resources/test.properties", text: testProps
         }
       }
     }
-    stage("Log properties") {
+    stage("Log test properties") {
       steps {
         sh 'cat src/test/resources/test.properties'
       }
     }
+    stage("Log email properties") {
+      steps {
+        sh 'cat post-report/src/main/resources/email.properties'
+      }
+    }
+
     stage("Run Tests") {
       steps {
         sh "mvn clean test"
       }
     }
-  } 
-
-  post {
-    always {
-      sh 'mvn surefire-report:report'
-      sh 'ls -l target/site/'
+    stage("Generate reports and run post-reports") {
+        steps {
+            dir("tests") {
+                sh "mvn surefire-report:report"
+            }
+            dir("post-report") {
+                sh "mvn clean install exec:java"
+            }
+        }
     }
-  }
 }

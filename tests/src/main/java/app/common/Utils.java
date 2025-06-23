@@ -1,14 +1,8 @@
 package app.common;
 
 import app.common.enums.Direction;
-import app.driver.Driver;
-import app.driver.DriverManager;
 import context.ContextStore;
 import io.appium.java_client.AppiumDriver;
-import jakarta.mail.MessagingException;
-import jakarta.mail.Multipart;
-import jakarta.mail.internet.MimeBodyPart;
-import jakarta.mail.internet.MimeMultipart;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Pause;
@@ -16,11 +10,8 @@ import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import utils.NumericUtilities;
 import utils.Printer;
-import utils.email.EmailUtilities;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
 
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import static java.time.Duration.ofMillis;
@@ -201,31 +191,6 @@ public class Utils {
         catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static void sendReportEmail() {
-        new Printer(Utils.class).info("Sending the report email...");
-        EmailClient emailClient = new EmailClient();
-        String contentType = "text/html; charset=utf-8";
-        String host = ContextStore.get("email-host").toString();
-        String sender = ContextStore.get("sender-email").toString();
-        String receiver = ContextStore.get("receiver-email").toString();
-        String appPassword = ContextStore.get("email-application-password").toString();
-        String subject = "AccuWeather Automation Report - Please find the attached test report.";
-        try {
-            String htmlContent = Files.readString(Paths.get("target/site/surefire-report.html"));
-            emailClient.sendEmail(host,
-                    subject,
-                    htmlContent ,
-                    contentType,
-                    receiver,
-                    sender,
-                    appPassword,
-                    null);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        new Printer(Utils.class).info("Report email is sent!");
     }
 
 }

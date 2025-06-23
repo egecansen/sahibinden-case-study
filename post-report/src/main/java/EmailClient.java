@@ -1,10 +1,12 @@
-package app.common;
-
 import context.ContextStore;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import utils.Printer;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class EmailClient {
@@ -46,6 +48,31 @@ public class EmailClient {
         } catch (MessagingException mex) {
             log.error(mex.getMessage(), mex);
         }
+    }
+
+    public static void sendReportEmail() {
+        new Printer(EmailClient.class).info("Sending the report email...");
+        EmailClient emailClient = new EmailClient();
+        String contentType = "text/html; charset=utf-8";
+        String host = ContextStore.get("email-host").toString();
+        String sender = ContextStore.get("sender-email").toString();
+        String receiver = ContextStore.get("receiver-email").toString();
+        String appPassword = ContextStore.get("email-application-password").toString();
+        String subject = "AccuWeather Automation Report - Please find the attached test report.";
+        try {
+            String htmlContent = Files.readString(Paths.get("target/site/surefire-report.html"));
+            emailClient.sendEmail(host,
+                    subject,
+                    htmlContent ,
+                    contentType,
+                    receiver,
+                    sender,
+                    appPassword,
+                    null);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        new Printer(EmailClient.class).info("Report email is sent!");
     }
 
 }
