@@ -22,7 +22,6 @@ public class StatusWatcher implements TestWatcher, TestExecutionExceptionHandler
     public void testFailed(ExtensionContext context, Throwable cause) {
         log.warning("FAILED: " + context.getDisplayName());
         log.info(StringUtilities.highlighted(StringUtilities.Color.RED, Objects.requireNonNull(context.getExecutionException().orElse(null)).getMessage()));
-        Objects.requireNonNull(context.getExecutionException().orElse(null)).printStackTrace();
     }
     @Override
     public void testSuccessful(ExtensionContext context) {

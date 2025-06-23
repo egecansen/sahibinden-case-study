@@ -1,7 +1,6 @@
 package app.common;
 
 import app.common.enums.Direction;
-import context.ContextStore;
 import io.appium.java_client.AppiumDriver;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
@@ -15,8 +14,6 @@ import utils.Printer;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.Duration;
 
 import java.util.concurrent.TimeUnit;

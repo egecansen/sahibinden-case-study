@@ -12,17 +12,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import utils.Printer;
-import utils.SystemUtilities;
-
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.net.URL;
 import java.time.Duration;
-
-import static utils.StringUtilities.Color.PURPLE;
-import static utils.StringUtilities.Color.RESET;
-import static utils.StringUtilities.highlighted;
 
 @Component
 public class DriverFactory {
