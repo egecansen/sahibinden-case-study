@@ -22,14 +22,14 @@ pipeline {
       steps {
         dir('tests') {
           script {
-            def testProps = readFile('tests/src/test/resources/test.properties')
+            def testProps = readFile('src/test/resources/test.properties')
             testProps = testProps.replace("apikey={your.accuweather.api.key}", "apikey=${env.APIKEY}")
             writeFile file: 'test.properties', text: testProps
           }
         }
         dir('post-report') {
           script {
-            def emailProps = readFile('post-report/src/main/resources/email.properties')
+            def emailProps = readFile('src/main/resources/email.properties')
             emailProps = emailProps.replace("email-application-password={application.password}", "email-application-password=${env.EMAILPW}")
             emailProps = emailProps.replace("sender-email={sender.email}", "sender-email=${env.SENDER}")
             emailProps = emailProps.replace("receiver-email={receiver.email}", "receiver-email=${env.RECEIVER}")
