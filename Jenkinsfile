@@ -1,7 +1,16 @@
 pipeline {
   agent any
+
+
+    environment {
+        APIKEY = credentials("accuweather-apikey")
+        EMAILPW = credentials("gmail-app-password")
+        SENDER = credentials("receiver-email")
+        RECEIVER = credentials("sender-email")
+    }
+
   stages {
-    stage('Download APK') {
+    stage("Download APK") {
       steps {
         sh '''
           mkdir -p src/test/resources/apks
@@ -9,9 +18,21 @@ pipeline {
         '''
       }
     }
-    stage('Run Tests') {
+    stage("Inject secrets into properties") {
+                steps {
+                    // Use Groovy to update the properties file
+                    script {
+                         def props = readFile "test.properties"
+                         props = props.replace("apikey={your.accuweather.api.key}", "apikey=${env.APIKEY}")
+                         props = props.replace("email-application-password={application.password}", "email-application-password=${env.EMAILPW}")
+                         props = props.replace("sender-email={sender.email}", "sender-email=${env.SENDER}")
+                         props = props.replace("receiver-email={receiver.email}", "receiver-email=${env.RECEIVER}")
+                         writeFile file: "test.properties", text: props
+                    }
+                }
+    stage("Run Tests") {
       steps {
-        sh 'mvn clean test'
+        sh "mvn clean surefire-report:report"
       }
     }
   }
