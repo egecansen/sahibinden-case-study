@@ -109,7 +109,16 @@ This allows the module responsible for sending emails to access and attach the l
 
 ## Test Structure
 
-1. **API Automation**
+1. **UI**
+
+UI automation follows the Page Object Model for clarity and maintainability.
+
+* Each app screen has its own class under app.screens.
+* The ObjectFactory provides easy access to all screens, initializing each with the current Appium driver.
+* All element locators and screen actions defined in their respective page classes.
+
+  
+2. **API**
 
 API tests use a custom library layered on Retrofit & OkHttp for seamless integration and request handling.
 
@@ -118,14 +127,6 @@ API tests use a custom library layered on Retrofit & OkHttp for seamless integra
 * Step classes handle API calls and store relevant results in the test context for easy comparison with UI results.
 * Model classes are located in the models package.
 * API keys and parameters are configured in `test.properties`
-
-2. **UI**
-
-UI automation follows the Page Object Model for clarity and maintainability.
-
-* Each app screen has its own class under app.screens.
-* The ObjectFactory provides easy access to all screens, initializing each with the current Appium driver.
-* All element locators and screen actions defined in their respective page classes.
 
 
 ## Reporting
