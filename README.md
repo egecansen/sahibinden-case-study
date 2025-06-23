@@ -121,6 +121,17 @@ _If your Docker install uses the old CLI, use docker-compose up -d instead._
 - Jenkins UI: http://localhost:8088
 - Appium server: localhost:4723
 
+**Device Connection**
+
+This project includes custom entrypoint scripts that automatically connect local Android emulator to Appium and Jenkins.
+
+entrypoint.sh: Starts the ADB server and connects to your emulator before starting Jenkins.
+appiumentrypoint.sh: Does the same before starting Appium.
+The docker-compose.yaml sets up both containers with these scripts, and shares network access.
+How to use:
+
+_Make sure your Android emulator is running and listening for TCP connections._
+
 3. Jenkins Initial Setup
    
 On first launch, Jenkins will ask for an admin password, find it in jenkins_home/secrets/initialAdminPassword.
