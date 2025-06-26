@@ -61,14 +61,19 @@ pipeline {
         }
       }
     }
+
+    stage("Run Tests") {
+      steps {
+        dir("tests") {
+          sh "mvn clean test surefire-report:report"
+        }
+      }
+    }
   }
 
   post {
     always {
       // These always run, even if a previous stage fails
-      dir("tests") {
-        sh "mvn surefire-report:report -DskipTests || true"
-      }
       dir("post-report") {
         sh "mvn clean install exec:java || true"
       }
