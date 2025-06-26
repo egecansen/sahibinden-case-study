@@ -67,7 +67,7 @@ pipeline {
     always {
       // These always run, even if a previous stage fails
       dir("tests") {
-        sh "mvn surefire-report:report || true"
+        sh "mvn surefire-report:report -DskipTests || true"
       }
       dir("post-report") {
         sh "mvn clean install exec:java || true"
