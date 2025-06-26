@@ -19,13 +19,12 @@ import utils.Printer;
 @ExtendWith(StatusWatcher.class)
 public class BaseTest {
 
-    private final Printer log = new Printer(BaseTest.class);
+    Printer log = new Printer(BaseTest.class);
     @Autowired
-    protected Driver driverService;
+    Driver driverService;
     @Autowired
-    private ApplicationContext applicationContext;
-    protected AppiumDriver driver;
-
+    ApplicationContext applicationContext;
+    AppiumDriver driver;
 
     @BeforeEach
     public void setup(TestInfo testInfo) {
@@ -44,4 +43,5 @@ public class BaseTest {
             driverService.terminate();
         }
     }
+
 }

@@ -18,7 +18,7 @@ pipeline {
       }
     }
 
-    stage("Inject secrets into properties") {
+    stage("Inject test secrets into properties") {
       steps {
         dir('tests') {
           script {
@@ -27,17 +27,23 @@ pipeline {
             writeFile file: 'test.properties', text: testProps
           }
         }
-        dir('post-report') {
-          script {
-            def emailProps = readFile('src/main/resources/email.properties')
-            emailProps = emailProps.replace("email-application-password={application.password}", "email-application-password=${env.EMAILPW}")
-            emailProps = emailProps.replace("sender-email={sender.email}", "sender-email=${env.SENDER}")
-            emailProps = emailProps.replace("receiver-email={receiver.email}", "receiver-email=${env.RECEIVER}")
-            writeFile file: 'email.properties', text: emailProps
-          }
-        }
       }
     }
+
+    stage("Inject email secrets into properties") {
+          steps {
+            dir('post-report') {
+              script {
+                def emailProps = readFile('src/main/resources/email.properties')
+                emailProps = emailProps.replace("email-application-password={application.password}", "email-application-password=${env.EMAILPW}")
+                emailProps = emailProps.replace("sender-email={sender.email}", "sender-email=${env.SENDER}")
+                emailProps = emailProps.replace("receiver-email={receiver.email}", "receiver-email=${env.RECEIVER}")
+                writeFile file: 'email.properties', text: emailProps
+              }
+            }
+          }
+        }
+
     stage("Log test properties") {
       steps {
         sh 'cat tests/src/test/resources/test.properties'
@@ -61,7 +67,7 @@ pipeline {
     always {
       // These always run, even if a previous stage fails
       dir("tests") {
-        sh "mvn surefire-report:report || true" // use '|| true' to avoid stopping on error
+        sh "mvn surefire-report:report || true"
       }
       dir("post-report") {
         sh "mvn clean install exec:java || true"

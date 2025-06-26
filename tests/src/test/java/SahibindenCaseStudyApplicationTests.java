@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class SahibindenCaseStudyApplicationTests extends BaseTest {
 
-
 	@Autowired
 	protected ObjectFactory factory;
 	@Autowired
 	private AccuWeatherSteps accuWeatherSteps;
-
 
 	@Test @Tag("Case1") @DisplayName("Verify the Forecast data between UI screen and API response")
 	public void foreCastFlow() {

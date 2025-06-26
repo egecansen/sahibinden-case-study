@@ -8,8 +8,7 @@ import utils.FileUtilities;
 @Configuration
 public class CommonCapabilities {
 
-    @Autowired
-    private Properties properties;
+    private final Properties properties;
 
     @Autowired
     public CommonCapabilities(Properties properties) {
@@ -34,7 +33,6 @@ public class CommonCapabilities {
         if (apkFile.isEmpty()) {
             throw new RuntimeException("APK file is not found at: " + properties.getApk());
         }
-
         capabilities.setCapability("appium:app", apkFile);
 
         return capabilities;

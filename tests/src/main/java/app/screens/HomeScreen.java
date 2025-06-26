@@ -1,43 +1,27 @@
 package app.screens;
 
-import app.common.Utils;
+import app.common.ScreenObject;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
-import utils.Printer;
 
-
-public class HomeScreen {
-
-    public Printer log = new Printer(HomeScreen.class);
-    Utils utils;
+public class HomeScreen extends ScreenObject {
 
     public HomeScreen(AppiumDriver driver) {
-        this.utils = new Utils(driver);
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        super(driver);
     }
+
     @AndroidFindBy(xpath = "//android.view.View[@content-desc='Local Affiliate logo']")
     public WebElement mainNavigationLogo;
-
 
     public void verifyLandedOnHomeScreen() {
         utils.waitUntilDisplayed(mainNavigationLogo);
         log.success("mainNavigationLogo is displayed on the HomeScreen");
     }
 
-
     public void clickOnLocationsFromMainNavigation() {
-        utils.clickElementUntil(mainNavigationLogo);
+        utils.clickElementUntilTimeout(mainNavigationLogo);
         log.info("Clicked mainNavigationLogo on the HomeScreen");
     }
-
-
-
-    public void basic() {
-        mainNavigationLogo.click();
-    }
-
 
 }

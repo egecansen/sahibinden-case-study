@@ -1,21 +1,16 @@
 package app.screens;
 
+import app.common.ScreenObject;
 import context.ContextStore;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
-import utils.Printer;
 
-
-public class CurrentConditionsScreen {
-
-    public Printer log = new Printer(CurrentConditionsScreen.class);
+public class CurrentConditionsScreen extends ScreenObject {
 
     public CurrentConditionsScreen(AppiumDriver driver) {
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        super(driver);
     }
 
     @AndroidFindBy(xpath = "//android.widget.ScrollView/android.view.View/following-sibling::android.widget.TextView[1]")

@@ -154,7 +154,7 @@ public class Utils {
         fluentWait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
-    public void clickElementUntil(WebElement element) {
+    public void clickElementUntilTimeout(WebElement element) {
         final long startTime = System.currentTimeMillis();
         boolean isClicked = false;
         int attemptCounter = 0;

@@ -22,8 +22,8 @@ public class DriverFactory {
     private AppiumDriverLocalService service;
     private final Printer log = new Printer(DriverFactory.class);
     @Autowired
-    public DriverFactory(CommonCapabilities driverConfig) {
-        this.commonCapabilities = driverConfig;
+    public DriverFactory(CommonCapabilities commonCapabilities) {
+        this.commonCapabilities = commonCapabilities;
     }
 
     public void startService(DeviceConfig deviceConfig) {

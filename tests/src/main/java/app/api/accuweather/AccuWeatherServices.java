@@ -9,6 +9,7 @@ import java.util.List;
 import static app.api.accuweather.AccuWeatherAPI.*;
 
 public interface AccuWeatherServices {
+
     String BASE_URL = AccuWeatherAPI.BASE_URL;
 
     @GET(CURRENTCONDITIONS_SUFFIX + V1_SUFFIX + LOCATIONKEY_PREFIX)

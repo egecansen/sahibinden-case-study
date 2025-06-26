@@ -1,23 +1,15 @@
 package app.screens;
 
-import app.common.Utils;
+import app.common.ScreenObject;
 import context.ContextStore;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
-import utils.Printer;
 
-
-public class LocationsDropdownScreen {
-
-    public Printer log = new Printer(LocationsDropdownScreen.class);
-    Utils utils;
+public class LocationsDropdownScreen extends ScreenObject {
 
     public LocationsDropdownScreen(AppiumDriver driver) {
-        utils = new Utils(driver);
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        super(driver);
     }
 
     @AndroidFindBy(xpath = "//android.widget.EditText/android.view.View")
@@ -33,7 +25,7 @@ public class LocationsDropdownScreen {
         String targetLocation = ContextStore.get("location");
         utils.waitUntilDisplayed(searchBar);
         utils.waitUntilClickable(searchBar);
-        utils.clickElementUntil(searchBar);
+        utils.clickElementUntilTimeout(searchBar);
 
         log.info("Filling the search input with target location: " + targetLocation);
         searchInput.sendKeys(targetLocation);
@@ -41,7 +33,7 @@ public class LocationsDropdownScreen {
         utils.waitUntilDisplayed(firstResult);
         log.info("Results are displayed");
         utils.waitUntilClickable(firstResult);
-        utils.clickElementUntil(firstResult);
+        utils.clickElementUntilTimeout(firstResult);
         log.info("Clicked on the firstResult on the LocationsDropdownScreen");
     }
 }

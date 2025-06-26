@@ -1,23 +1,16 @@
 package app.screens;
 
-import app.common.Utils;
+import app.common.ScreenObject;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
-import utils.Printer;
+
+public class PersonalizedAdsScreen extends ScreenObject {
 
 
-public class PersonalizedAdsScreen {
-
-    public Printer log = new Printer(PersonalizedAdsScreen.class);
-
-    Utils utils;
     public PersonalizedAdsScreen(AppiumDriver driver) {
-        utils = new Utils(driver);
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        super(driver);
     }
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Next']")
@@ -32,13 +25,13 @@ public class PersonalizedAdsScreen {
 
     public void clickPersonalizedAdsScreenNextButton() {
         utils.waitUntilClickable(nextButton);
-        utils.clickElementUntil(nextButton);
+        utils.clickElementUntilTimeout(nextButton);
         log.info("Clicked on the nextButton on the PersonalizedAdsScreen");
 
         closeTermsOfUsePageIfDisplayed();
         utils.waitUntilDisplayed(allowPersonalizedAdsButton);
         utils.waitUntilClickable(allowPersonalizedAdsButton);
-        utils.clickElementUntil(allowPersonalizedAdsButton);
+        utils.clickElementUntilTimeout(allowPersonalizedAdsButton);
         log.info("Clicked on the allowPersonalizedAdsButton on the PersonalizedAdsScreen");
     }
 
@@ -48,7 +41,7 @@ public class PersonalizedAdsScreen {
             if (closePageButton.isDisplayed()) {
                 log.info("Terms of Use page is displayed");
                 log.info("Closing the Terms of Use page...");
-                utils.clickElementUntil(closePageButton);
+                utils.clickElementUntilTimeout(closePageButton);
             }
         }
         catch (NoSuchElementException ignored) {}

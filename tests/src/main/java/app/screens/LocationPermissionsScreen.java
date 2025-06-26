@@ -1,23 +1,15 @@
 package app.screens;
 
-import app.common.Utils;
+import app.common.ScreenObject;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
-import utils.Printer;
 
+public class LocationPermissionsScreen extends ScreenObject {
 
-public class LocationPermissionsScreen {
-
-    public Printer log = new Printer(LocationPermissionsScreen.class);
-
-    Utils utils;
 
     public LocationPermissionsScreen(AppiumDriver driver) {
-        this.utils = new Utils(driver);
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        super(driver);
     }
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Next']")
@@ -30,11 +22,11 @@ public class LocationPermissionsScreen {
     public void clickLocationAndPermissionsNextButton() {
         utils.waitUntilDisplayed(nextButton);
         utils.waitUntilClickable(nextButton);
-        utils.clickElementUntil(nextButton);
+        utils.clickElementUntilTimeout(nextButton);
         log.info("Clicked on the nextButton on the LocationPermissionsScreen");
 
         utils.waitUntilDisplayed(onlyThisTimeButton);
-        utils.clickElementUntil(onlyThisTimeButton);
+        utils.clickElementUntilTimeout(onlyThisTimeButton);
         log.info("Clicked on the onlyThisTimeButton on the LocationPermissionsScreen");
     }
 

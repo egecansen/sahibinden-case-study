@@ -1,28 +1,19 @@
 package app.screens;
 
-import app.common.Utils;
+import app.common.ScreenObject;
 import app.common.enums.Direction;
 import context.ContextStore;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
-import utils.Printer;
-
 import java.util.Arrays;
 import java.util.List;
 
-
-public class WeatherInfoScreen {
-
-    public Printer log = new Printer(WeatherInfoScreen.class);
-    Utils utils;
+public class WeatherInfoScreen extends ScreenObject {
 
     public WeatherInfoScreen(AppiumDriver driver) {
-        utils = new Utils(driver);
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
+        super(driver);
     }
 
     @AndroidFindBy(xpath = "//android.view.View[@resource-id='minutecast_bar']")
@@ -51,7 +42,7 @@ public class WeatherInfoScreen {
 
     public void clickOnSeeMoreButton() {
         utils.waitUntilDisplayed(seeMoreButton);
-        utils.clickElementUntil(seeMoreButton);
+        utils.clickElementUntilTimeout(seeMoreButton);
         log.info("Clicked on seeMoreButton on the WeatherInfoScreen");
     }
 

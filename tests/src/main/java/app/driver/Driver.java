@@ -13,11 +13,11 @@ import utils.Printer;
 @Scope("prototype")
 public class Driver {
 
-    private final Printer log = new Printer(Driver.class);
-    private final DriverFactory driverFactory;
+    private Printer log = new Printer(Driver.class);
+    private DriverFactory driverFactory;
     private AppiumDriver driver;
     private DeviceConfig deviceConfig;
-    protected DevicePool devicePool = DevicePool.getInstance();
+    private DevicePool devicePool = DevicePool.getInstance();
 
     @Autowired
     public Driver(DriverFactory driverFactory) {
@@ -26,7 +26,6 @@ public class Driver {
 
     public void initialize() {
         log.info("Initializing the driver...");
-        ContextStore.loadProperties("test.properties");
         if (Boolean.parseBoolean(ContextStore.get("use-default-device"))) {
             log.warning("Default device is selected");
             deviceConfig = devicePool.getDefaultDevice();
