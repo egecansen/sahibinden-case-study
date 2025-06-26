@@ -39,13 +39,6 @@
                     <include>**/*.properties</include>
                 </includes>
             </resource>
-
-            <resource>
-                <directory>${project.basedir}/../tests/target/site/</directory>
-                <includes>
-                    <include>surefire-report.html</include>
-                </includes>
-            </resource>
         </resources>
     </build>
 

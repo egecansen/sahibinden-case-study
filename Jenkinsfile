@@ -61,6 +61,11 @@ pipeline {
         }
       }
     }
+    stage('Copy Surefire Report') {
+        steps {
+            sh 'cp -r sahibinden-case-study/tests/target/site/surefire-report.html sahibinden-case-study/post-report/target/site/ || true'
+        }
+    }
   }
 
   post {
