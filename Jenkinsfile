@@ -61,16 +61,12 @@ pipeline {
         }
       }
     }
-    stage('Copy Surefire Report') {
-        steps {
-            sh 'cp -r sahibinden-case-study/tests/target/site/surefire-report.html sahibinden-case-study/post-report/target/site/ || true'
-        }
-    }
   }
 
   post {
     always {
-      // These always run, even if a previous stage fails
+      sh 'mkdir -p post-report/target/site'
+      sh "cp -r sahibinden-case-study/tests/target/site/surefire-report.html sahibinden-case-study/post-report/target/site/ || true"
       dir("post-report") {
         sh "mvn clean install exec:java || true"
       }
