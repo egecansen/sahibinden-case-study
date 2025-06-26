@@ -57,14 +57,6 @@ pipeline {
     stage("Run Tests") {
       steps {
         dir("tests") {
-          sh "mvn clean test"
-        }
-      }
-    }
-
-    stage("Run Tests") {
-      steps {
-        dir("tests") {
           sh "mvn clean test surefire-report:report"
         }
       }
