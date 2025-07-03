@@ -15,7 +15,7 @@ public class Driver {
 
     private final Printer log = new Printer(Driver.class);
     private final DriverFactory driverFactory;
-    private AppiumDriver driver;
+    private static AppiumDriver driver;
     private DeviceConfig deviceConfig;
     protected DevicePool devicePool = DevicePool.getInstance();
 
@@ -34,7 +34,6 @@ public class Driver {
         else deviceConfig = devicePool.acquireDevice();
         driverFactory.startService(deviceConfig);
         driver = driverFactory.createDriver(deviceConfig);
-        DriverManager.setDriver(driver);
     }
 
     public void terminate() {
@@ -42,7 +41,6 @@ public class Driver {
         try {
             if (driver != null) {
                 driver.quit();
-                DriverManager.removeDriver();
             }
             if (deviceConfig != null) {
                 devicePool.releaseDevice(deviceConfig);
@@ -57,7 +55,7 @@ public class Driver {
         }
     }
 
-    public AppiumDriver getDriver() {
+    public static AppiumDriver getDriver() {
         return driver;
     }
 }

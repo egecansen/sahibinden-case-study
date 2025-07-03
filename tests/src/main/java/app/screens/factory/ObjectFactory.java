@@ -1,6 +1,6 @@
 package app.screens.factory;
 
-import app.driver.DriverManager;
+import app.driver.Driver;
 import app.screens.*;
 import org.springframework.stereotype.Component;
 
@@ -8,30 +8,30 @@ import org.springframework.stereotype.Component;
 public class ObjectFactory {
 
     public HomeScreen homeScreen() {
-        return new HomeScreen(DriverManager.getDriver());
+        return new HomeScreen(Driver.getDriver());
     }
     public GetStartedScreen getStartedScreen() {
-        return new GetStartedScreen(DriverManager.getDriver());
+        return new GetStartedScreen(Driver.getDriver());
     }
     public WeatherInfoScreen weatherInfoScreen() {
-        return new WeatherInfoScreen(DriverManager.getDriver());
+        return new WeatherInfoScreen(Driver.getDriver());
     }
     public NotificationsScreen notificationsScreen() {
-        return new NotificationsScreen(DriverManager.getDriver());
+        return new NotificationsScreen(Driver.getDriver());
     }
     public TermsAndPrivacyScreen termsAndPrivacyScreen() {
-        return new TermsAndPrivacyScreen(DriverManager.getDriver());
+        return new TermsAndPrivacyScreen(Driver.getDriver());
     }
     public PersonalizedAdsScreen personalizedAdsScreen() {
-        return new PersonalizedAdsScreen(DriverManager.getDriver());
+        return new PersonalizedAdsScreen(Driver.getDriver());
     }
     public CurrentConditionsScreen currentConditionsScreen() {
-        return new CurrentConditionsScreen(DriverManager.getDriver());
+        return new CurrentConditionsScreen(Driver.getDriver());
     }
     public LocationsDropdownScreen locationsDropdownScreen() {
-        return new LocationsDropdownScreen(DriverManager.getDriver());
+        return new LocationsDropdownScreen(Driver.getDriver());
     }
     public LocationPermissionsScreen locationPermissionsScreen() {
-        return new LocationPermissionsScreen(DriverManager.getDriver());
+        return new LocationPermissionsScreen(Driver.getDriver());
     }
 }

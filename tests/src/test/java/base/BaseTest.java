@@ -4,7 +4,6 @@ import app.SahibindenCaseStudyApplication;
 import app.common.TestStatus;
 import app.common.Utils;
 import app.driver.Driver;
-import app.driver.DriverManager;
 import context.ContextStore;
 import io.appium.java_client.AppiumDriver;
 import org.junit.jupiter.api.*;
@@ -19,7 +18,7 @@ import utils.Printer;
 @ExtendWith(StatusWatcher.class)
 public class BaseTest {
 
-    private final Printer log = new Printer(BaseTest.class);
+    private final static Printer log = new Printer(BaseTest.class);
     @Autowired
     protected Driver driverService;
     @Autowired
@@ -27,12 +26,16 @@ public class BaseTest {
     protected AppiumDriver driver;
 
 
-    @BeforeEach
-    public void setup(TestInfo testInfo) {
+    @BeforeAll
+    public static void setup() {
         ContextStore.loadProperties("test.properties");
+        log.info("Properties loaded");
+    }
+    @BeforeEach
+    public void before(TestInfo testInfo) {
         driverService = applicationContext.getBean(Driver.class);
         driverService.initialize();
-        driver = DriverManager.getDriver();
+        driver = Driver.getDriver();
         log.important("EXECUTING: " + testInfo.getDisplayName());
     }
 
