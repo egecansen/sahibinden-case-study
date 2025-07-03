@@ -95,14 +95,6 @@ _Reports can be found at target/site/surefire-report.html_
     receiver-email={receiver.email}
     email-application-password={application.password}
 
-    
-`junit-platform.properties`
-
-    junit.jupiter.execution.parallel.enabled = false
-    junit.jupiter.execution.parallel.mode.default = concurrent
-    junit.jupiter.execution.parallel.config.strategy = fixed
-    junit.jupiter.execution.parallel.config.fixed.parallelism = 2
-
 _By the help of the recources on pom.xml, all .properties files in the source folder are automatically included in the build, so configuration files are always available when the application runs. 
 Additionally, after tests are executed, the generated HTML test report is automatically included in the post-report target directory. 
 This allows the module responsible for sending emails to access and attach the latest report without any manual copying or file moving on your part._
