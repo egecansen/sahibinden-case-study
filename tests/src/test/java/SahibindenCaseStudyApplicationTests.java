@@ -26,7 +26,6 @@ public class SahibindenCaseStudyApplicationTests extends BaseTest {
 		factory.weatherInfoScreen().swipeUntilWeatherForecastBoxDisplayed();
 		accuWeatherSteps.saveFiveDayForecastDataToContext();
 		factory.weatherInfoScreen().verifyTheForecastData();
-
 	}
 
 	@Test @Tag("Case2") @DisplayName("Verify the Current Conditions data between UI screen and API response")
@@ -44,7 +43,6 @@ public class SahibindenCaseStudyApplicationTests extends BaseTest {
 		accuWeatherSteps.saveTargetLocationWeatherInfoToContext();
 		factory.currentConditionsScreen().verifyWeatherText();
 		factory.currentConditionsScreen().verifyTemperatureValue();
-
 	}
 
 }
